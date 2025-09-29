@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyChkN6mxdoU7_gNMI9edudo6xvOnp-18xg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>985315685449</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.uddeshya.AI-TabBar</string>
+	<key>PROJECT_ID</key>
+	<string>aitabbar</string>
+	<key>STORAGE_BUCKET</key>
+	<string>aitabbar.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:985315685449:ios:cfa41c8e94ea4d918c7b98</string>
+</dict>
+</plist>
