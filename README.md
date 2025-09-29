@@ -26,4 +26,6 @@ Instead of just searching files or apps, you can ask questions, get direct answe
    ```bash
    git clone https://github.com/your-username/ai-tab-bar.git
    cd ai-tab-bar
+2. Start the project:
+   open -a XCode .
 
