@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		072E2A1E2E8BF87200393AB5 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 072E2A1D2E8BF87200393AB5 /* HotKey */; };
 		07C9925B2E893CD2003ADD0F /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 07C9925A2E893CD2003ADD0F /* GoogleGenerativeAI */; };
 		07C992642E8941F4003ADD0F /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 07C992632E8941F4003ADD0F /* FirebaseAI */; };
 		07C992662E8941F4003ADD0F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 07C992652E8941F4003ADD0F /* FirebaseAnalytics */; };
@@ -38,6 +39,7 @@
 				07C9926C2E8941F4003ADD0F /* FirebaseFunctions in Frameworks */,
 				07C9926A2E8941F4003ADD0F /* FirebaseFirestore in Frameworks */,
 				07C992682E8941F4003ADD0F /* FirebaseAuth in Frameworks */,
+				072E2A1E2E8BF87200393AB5 /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +88,7 @@
 				07C992672E8941F4003ADD0F /* FirebaseAuth */,
 				07C992692E8941F4003ADD0F /* FirebaseFirestore */,
 				07C9926B2E8941F4003ADD0F /* FirebaseFunctions */,
+				072E2A1D2E8BF87200393AB5 /* HotKey */,
 			);
 			productName = AI_TabBar;
 			productReference = 079DB7B12E88607600015DC7 /* AI_TabBar.app */;
@@ -118,6 +121,7 @@
 			packageReferences = (
 				07C992592E893CD2003ADD0F /* XCRemoteSwiftPackageReference "deprecated-generative-ai-swift" */,
 				07C992622E8941F4003ADD0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				072E2A1C2E8BF87200393AB5 /* XCRemoteSwiftPackageReference "HotKey" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 079DB7B22E88607600015DC7 /* Products */;
@@ -283,6 +287,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -311,6 +316,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -350,6 +356,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		072E2A1C2E8BF87200393AB5 /* XCRemoteSwiftPackageReference "HotKey" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/soffes/HotKey";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		07C992592E893CD2003ADD0F /* XCRemoteSwiftPackageReference "deprecated-generative-ai-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google-gemini/deprecated-generative-ai-swift";
@@ -369,6 +383,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		072E2A1D2E8BF87200393AB5 /* HotKey */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 072E2A1C2E8BF87200393AB5 /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
+		};
 		07C9925A2E893CD2003ADD0F /* GoogleGenerativeAI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 07C992592E893CD2003ADD0F /* XCRemoteSwiftPackageReference "deprecated-generative-ai-swift" */;

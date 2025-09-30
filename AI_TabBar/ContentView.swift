@@ -102,7 +102,6 @@ struct ContentView: View {
         }
     }
     
-    
     var body: some View {
         ZStack(alignment: .topLeading) {
             VisualEffectView()
@@ -110,7 +109,7 @@ struct ContentView: View {
                 .shadow(radius: 20)
                 .overlay {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(.black.opacity(0.2))
+                        .fill(.app.opacity(0.7))
                 }
             
             VStack(spacing: 0) {
@@ -154,7 +153,7 @@ struct ContentView: View {
                     }
                     .padding([.top, .leading], 15)
                     .padding(.trailing, 10)
-                    
+                
                 
                 Divider()
                     .tint(.white.opacity(0.5))
@@ -198,7 +197,7 @@ struct ContentView: View {
     var resultView: some View {
         VStack {
             if self.isLoading {
-               ProgressView()
+                ProgressView()
                     .tint(.white)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {

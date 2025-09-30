@@ -1,5 +1,5 @@
 {
-  "originHash" : "56f175d2f269abce4982ab1e057d8c4d734424db9af88d88ce69d8478db29f34",
+  "originHash" : "e382970ddac1ef28986d0d31ea7733a5ee253f8e06e867074738e4e985ef03e3",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -89,6 +89,15 @@
       "state" : {
         "revision" : "fb7f2740b1570d2f7599c6bb9531bf4fad6974b7",
         "version" : "5.0.0"
+      }
+    },
+    {
+      "identity" : "hotkey",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/soffes/HotKey",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a3cf605d7a96f6ff50e04fcb6dea6e2613cfcbe4"
       }
     },
     {
