@@ -11,9 +11,9 @@ import SwiftData
 struct ContentView: View {
     
     let presets: Array<( name: String, image: String )> = [
-        ("Coding", "desktopcomputer"),
-        ("Design", "paintbrush.pointed.fill"),
-        ("Writing", "pencil.circle.fill"),
+        ("Coding & Programming", "desktopcomputer"),
+        ("Design & Art", "paintbrush.pointed.fill"),
+        ("Writing & Grammer", "pencil.circle.fill"),
         ("Interview", "person.fill")
     ]
     
@@ -91,7 +91,7 @@ struct ContentView: View {
                     self.isLoading = true
                 }
                 self.aiSearch()
-            } else if event.keyCode == 53 {
+            } else if event.keyCode == 51 {
                 withAnimation {
                     if self.showResultScreen {
                         self.showResultScreen = false
@@ -112,76 +112,84 @@ struct ContentView: View {
                         .fill(.app.opacity(0.7))
                 }
             
-            VStack(spacing: 0) {
+            HStack {
                 
-                
-                
-                // MARK: This is the search bar
-                TextField("Search", text: self.$searchText)
-                    .focused(self.$searchBarFocusedState)
-                    .textFieldStyle(PlainTextFieldStyle())
-                    .font(.title)
-                    .padding(.horizontal, 30)
-                    .overlay(alignment: .leading) {
-                        HStack {
-                            Image(systemName: self.showResultScreen ? "arrow.left" : "magnifyingglass")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .contentTransition(.symbolEffect)
-                                .onTapGesture {
-                                    withAnimation {
-                                        if self.showResultScreen {
-                                            self.showResultScreen = false
+                VStack(spacing: 0) {
+                    
+                    
+                    
+                    // MARK: This is the search bar
+                    TextField("Search", text: self.$searchText)
+                        .focused(self.$searchBarFocusedState)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .font(.title)
+                        .padding(.horizontal, 30)
+                        .overlay(alignment: .leading) {
+                            HStack {
+                                Image(systemName: self.showResultScreen ? "arrow.left" : "magnifyingglass")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .contentTransition(.symbolEffect)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            if self.showResultScreen {
+                                                self.showResultScreen = false
+                                            }
                                         }
                                     }
+                                Spacer()
+                                
+                                if !self.showResultScreen {
+                                    Image(systemName: "paperplane.fill")
+                                        .resizable()
+                                        .frame(width: 18, height: 18)
+                                        .rotationEffect(.degrees(45))
+                                        .foregroundStyle(self.searchText.isEmpty || self.searchText.count < 5 ? .white.opacity(0.15) : .white)
+                                        .padding(10)
+                                        .background(self.searchText.isEmpty || self.searchText.count < 5 ? .clear : .white.opacity(0.1), in: RoundedRectangle(cornerRadius: 5))
+                                        .transition(.offset(x: 100).combined(with: .opacity))
                                 }
-                            Spacer()
+                            }
+                            .frame(maxWidth: .infinity)
                             
-                            if !self.showResultScreen {
-                                Image(systemName: "paperplane.fill")
-                                    .resizable()
-                                    .frame(width: 18, height: 18)
-                                    .rotationEffect(.degrees(45))
-                                    .foregroundStyle(self.searchText.isEmpty || self.searchText.count < 5 ? .white.opacity(0.15) : .white)
-                                    .padding(10)
-                                    .background(self.searchText.isEmpty || self.searchText.count < 5 ? .clear : .white.opacity(0.1), in: RoundedRectangle(cornerRadius: 5))
-                                    .transition(.offset(x: 100))
-                            }
                         }
-                        .frame(maxWidth: .infinity)
-                        
+                        .padding([.top, .leading], 15)
+                        .padding(.trailing, 10)
+                    
+                    
+                    Divider()
+                        .tint(.white.opacity(0.5))
+                        .padding(.top, 15)
+                    
+                    if self.showResultScreen {
+                        self.resultView
+                    } else {
+                        self.homeView
+                            .onAppear {
+                                DispatchQueue.main.async {
+                                    self.searchBarFocusedState = true
+                                }
+                            }
+                            .onDisappear {
+                                DispatchQueue.main.async {
+                                    self.searchBarFocusedState = false
+                                }
+                            }
                     }
-                    .padding([.top, .leading], 15)
-                    .padding(.trailing, 10)
-                
-                
-                Divider()
-                    .tint(.white.opacity(0.5))
-                    .padding(.top, 15)
-                
-                if self.showResultScreen {
-                    self.resultView
-                } else {
-                    self.homeView
-                        .onAppear {
-                            DispatchQueue.main.async {
-                                self.searchBarFocusedState = true
-                            }
-                        }
-                        .onDisappear {
-                            DispatchQueue.main.async {
-                                self.searchBarFocusedState = false
-                            }
-                        }
+                    
+                    
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 
+                // MARK: View For Selecting Photo
+                SelectPhotoView()
                 
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             
         }
-        .frame(width: 700)
+        .frame(width: 900)
         .background(.clear)
         .overlay {
             RoundedRectangle(cornerRadius: 12)
@@ -226,9 +234,12 @@ struct ContentView: View {
             ForEach(Array(self.presets.enumerated()), id: \.offset) { index, item in
                 HStack {
                     Image(systemName: item.image)
-                        .frame(maxWidth: 20)
-                        .frame(width: 20)
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .frame(width: 30)
+                    
                     Text(item.0)
+                        .font(.system(size: 15, weight: .regular, design: .rounded))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(10)
@@ -260,9 +271,12 @@ struct ContentView: View {
             ForEach(Array(self.advancedOptions.enumerated()), id: \.offset) { index, item in
                 HStack {
                     Image(systemName: item.image)
-                        .frame(maxWidth: 20)
-                        .frame(width: 20)
-                    Text(item.name)
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .frame(width: 30)
+                    
+                    Text(item.0)
+                        .font(.system(size: 15, weight: .regular, design: .rounded))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(10)

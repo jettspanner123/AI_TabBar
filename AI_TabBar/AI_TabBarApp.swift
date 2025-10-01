@@ -10,11 +10,13 @@ struct AI_TabBarApp: App {
     
     let hotKey = HotKey(key: .space, modifiers: [.command, .shift])
     
+    
     init() {
         let delegate = applicationDelegate
         hotKey.keyDownHandler = {
             delegate.toggleWindow()
         }
+        
     }
     
     var body: some Scene {
@@ -27,11 +29,13 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         
+        guard let mainScreen = NSScreen.main else { return }
         
         let innerContent = ContentView()
         
+        
         self.window = ClickableWindow(
-            contentRect: NSRect(x: .zero, y: .zero, width: 700, height: 60), styleMask: [.borderless], backing: .buffered, defer: false
+            contentRect: NSRect(x: (mainScreen.frame.width / 2) - 450, y: 1000, width: 900, height: 60), styleMask: [.borderless], backing: .buffered, defer: false
         )
         
         self.window?.isReleasedWhenClosed = false
@@ -42,13 +46,16 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         
         self.window?.contentView = NSHostingView(rootView: innerContent)
         
-        self.window?.center()
         self.window?.makeKeyAndOrderFront(nil)
+    }
+    
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        return .terminateCancel
     }
     
     func toggleWindow() {
         guard let window = self.window else { return }
-
+        
         if window.isVisible {
             // Hides the window without quitting the app
             window.orderOut(nil)
@@ -58,6 +65,15 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
             window.makeKeyAndOrderFront(nil)
             NSApp.activate(ignoringOtherApps: true) // Ensure the app is frontmost
             window.makeKey()
+        }
+    }
+    
+    func hideWindow() {
+        guard let window = self.window else { return }
+        
+        if window.isVisible {
+            window.orderOut(nil)
+            NSApp.deactivate()
         }
     }
 }
