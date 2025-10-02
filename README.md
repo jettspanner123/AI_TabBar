@@ -1,75 +1,69 @@
-AI Tab Bar: Your AI-Powered Spotlight 💡
-The AI Tab Bar is a Mac utility designed to replace or augment the traditional macOS Spotlight search. It offers a seamless and quick way to get instant answers and complete tasks using the power of Artificial Intelligence directly from your desktop.
+# AI Tab Bar: Your AI-Powered Spotlight 💡  
 
-✨ Features
-Global Access: Activate with a simple, customizable keyboard shortcut (e.g., Cmd + Shift + A) from any application.
+AI Tab Bar is a macOS utility designed to replace or augment the traditional **Spotlight search**.  
+It gives you a seamless, instant way to get answers and complete tasks using the power of **Artificial Intelligence**—right from your desktop.  
 
-Instant AI Answers: Get concise, accurate, and relevant responses to your questions powered by advanced language models.
+---
 
-Contextual Queries: Use AI for tasks like summarization, translation, code explanation, formatting, or creative writing right where you need it.
+## ✨ Features  
 
-Clean Interface: A minimal, non-intrusive drop-down window that sits centrally, similar to macOS Spotlight, and disappears when not in use.
+- **Global Access** – Activate with a customizable shortcut (default: `Cmd + Shift + A`) from any application.  
+- **Instant AI Answers** – Get concise, accurate, and relevant responses powered by advanced language models.  
+- **Contextual Queries** – Summarization, translation, code explanation, formatting, or creative writing—all in one place.  
+- **Clean Interface** – Minimal, Spotlight-like drop-down window that disappears when not in use.  
+- **Customizable AI Source** – Switch between different AI providers (OpenAI, Gemini, Claude, etc.).  
+- **History & Management** – Automatically saves past queries and threads for easy reference.  
 
-Customizable AI Source: Easily switch between different AI providers (e.g., OpenAI, Gemini, Claude) via the settings.
+---
 
-History & Management: Automatically save past queries and conversation threads, making it easy to reference previous answers.
+## 💻 Installation  
 
-💻 Installation
-Prerequisites
-macOS 12.0 (Monterey) or later.
+### Prerequisites  
+- macOS 12.0 (Monterey) or later  
+- An API key from a supported AI provider (e.g., OpenAI, Google AI)  
 
-An API key from a supported AI provider (e.g., OpenAI, Google AI).
+### Steps  
+1. **Download** – Grab the latest release of `AI Tab Bar.app` from the [Releases Page](./releases).  
+2. **Move to Applications** – Drag the app into your `/Applications` folder.  
+3. **Launch** – Double-click the app icon to start.  
+4. **Initial Setup** – Enter your API Key and choose your preferred AI provider/model on first launch.  
 
-Steps
-Download: Download the latest release of AI Tab Bar.app from the Releases Page.
+---
 
-Move to Applications: Drag the downloaded .app file into your /Applications folder.
+## 🚀 Usage  
 
-Launch: Double-click the application icon to launch it.
+1. **Activate** – Press your global shortcut (`Cmd + Shift + A` by default).  
+2. **Type** – Enter your query in the search bar:  
+   - `What is the capital of New Zealand?`  
+   - `Write a short summary of the plot of Dune in three sentences.`  
+   - `Explain this Python code snippet: [i for i in range(10)]`  
+3. **Receive Answer** – AI streams the response directly below your input.  
+4. **Interact** – Copy, paste, or continue the conversation.  
+5. **Dismiss** – Press `Esc` or click outside the window.  
 
-Initial Setup: On the first launch, you will be prompted to enter your API Key and select your preferred AI Model in the settings.
+---
 
-🚀 Usage
-Activate: Press the designated Global Shortcut (default is Cmd + Shift + A) to bring up the AI Tab Bar window.
+## ⚙️ Configuration  
 
-Type: Start typing your query or request into the search bar.
+Open the **settings panel** via the **gear icon** in the Tab Bar or from the **macOS menubar**.  
 
-Example: "What is the capital of New Zealand?"
+| Setting              | Description                                                                 |
+|-----------------------|-----------------------------------------------------------------------------|
+| **Global Shortcut**   | Customize the key combination to open the Tab Bar.                         |
+| **API Key**           | Required – Enter your API key for the chosen AI provider.                  |
+| **AI Provider**       | Select your backend service (OpenAI, Gemini, Anthropic, etc.).             |
+| **AI Model**          | Choose the model (e.g., GPT-4o, Gemini 1.5 Pro).                           |
+| **Max History Length**| Set the number of previous queries and conversations to store.             |
+| **Launch at Login**   | Enable auto-launch when macOS starts.                                      |
 
-Example: "Write a short summary of the plot of 'Dune' in three sentences."
+---
 
-Example: "Explain this Python code snippet: [i for i in range(10)]"
+## 🤝 Contributing  
 
-Receive Answer: The AI will process your request and stream the answer directly below your input field.
+We welcome contributions!  
 
-Interact: You can copy the response, paste it into another application, or continue the conversation by typing a follow-up question.
+1. Fork the repository.  
+2. Create a new branch:  
+   ```bash
+   git checkout -b feature/awesome-thing
 
-Dismiss: Press Esc or click outside the window to close the AI Tab Bar.
-
-⚙️ Configuration
-Access the settings panel by clicking the gear icon  in the Tab Bar or via the macOS menubar icon.
-
-Setting	Description
-Global Shortcut	Customize the keyboard combination used to open the Tab Bar.
-API Key	Input your necessary API key for the chosen AI service. (Required)
-AI Provider	Select the backend AI service you wish to use (e.g., OpenAI, Gemini, Anthropic).
-AI Model	Select the specific model (e.g., GPT-4o, Gemini 1.5 Pro) from your chosen provider.
-Max History Length	Set the number of previous queries and conversations to store.
-Launch at Login	Toggle to automatically launch the application when your Mac starts up.
-
-Export to Sheets
-🤝 Contributing
-We welcome contributions! If you have suggestions, bug reports, or would like to contribute code:
-
-Fork the repository.
-
-Create a new branch (git checkout -b feature/awesome-thing).
-
-Commit your changes (git commit -m 'Feat: Added an awesome new thing').
-
-Push to the branch (git push origin feature/awesome-thing).
-
-Open a Pull Request.
-
-📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
