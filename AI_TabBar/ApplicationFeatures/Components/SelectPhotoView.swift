@@ -16,10 +16,9 @@ struct SelectPhotoView: View {
     func openFileDialog() -> Void {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = false
-        panel.allowedContentTypes = [.image]
+        panel.allowedContentTypes = [.jpeg, .png, .image]
         panel.canChooseDirectories = false
         panel.canCreateDirectories = false
-        
         
         withAnimation {
             self.currentSelectedFilePathLoading = true
@@ -71,7 +70,9 @@ struct SelectPhotoView: View {
                 in: RoundedRectangle(cornerRadius: 8)
             )
             .onHover { hover in
-                self.isHovering = hover
+                withAnimation {
+                    self.isHovering = hover
+                }
                 ApplicationUIHelper.current.togglePointerOnHover(hover: hover)
             }
             .padding()

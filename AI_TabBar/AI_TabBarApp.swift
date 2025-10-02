@@ -39,7 +39,9 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         )
         
         self.window?.isReleasedWhenClosed = false
-        self.window?.level = .screenSaver
+        
+        let highestPossibleLevel = CGWindowLevelForKey(.maximumWindow)
+        self.window?.level = NSWindow.Level(rawValue: Int(highestPossibleLevel))
         self.window?.isOpaque = false
         self.window?.backgroundColor = .clear
         self.window?.isMovable = true
