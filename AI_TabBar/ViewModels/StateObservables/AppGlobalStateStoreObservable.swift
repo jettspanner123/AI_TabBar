@@ -14,7 +14,6 @@ class AppGlobalStateStoreObservable {
         return self.appGlobalStateStore.searchAreaExpantionState
     }
     
-    // MARK: Working With Window Height
     func getDynamicExpandedWindowHeight() -> CGFloat {
         return self.appGlobalStateStore.searchAreaExpantionState == .EXPANDED ? AppRootConstants.current.WINDOW_DIMENTIONS_EXPANDED.height : AppRootConstants.current.WINDOW_DIMENTIONS_COLLAPSED.height
     }
@@ -31,8 +30,6 @@ class AppGlobalStateStoreObservable {
         }
     }
     
-    
-    // MARK: Working With Window Width
     func getDynamicExpandedWindowWidth() -> CGFloat {
         return self.appGlobalStateStore.searchAreaExpantionState == .EXPANDED ? AppRootConstants.current.WINDOW_DIMENTIONS_EXPANDED.width : AppRootConstants.current.WINDOW_DIMENTIONS_COLLAPSED.width
     }

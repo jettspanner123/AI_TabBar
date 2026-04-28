@@ -6,9 +6,14 @@ struct AISpotLightSearchTextInputComponent: View {
     
     @Binding var searchQuery: String
     @FocusState private var textFeildFocusState: Bool
-
+    
     var appGlobalStateStoreObservable: AppGlobalStateStoreObservable?
     var aiSpotLightViewModel: AISpotLightSearchViewModel?
+    
+    
+    func handleScreenShotSearchButton() async throws -> Void {
+        let imageData = self.aiSpotLightViewModel?.takeAppScreenshot()
+    }
     
     
     var body: some View {
@@ -31,7 +36,11 @@ struct AISpotLightSearchTextInputComponent: View {
             Spacer()
             
             HStack {
-                AISpotLightSearchActionButtonComponent()
+                AISpotLightSearchActionButtonComponent() {
+                    Task {
+                        try? await self.handleScreenShotSearchButton()
+                    }
+                }
             }
             .padding(.horizontal, self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED ? 20 : 10)
             
@@ -51,13 +60,21 @@ struct AISpotLightSearchTextInputComponent: View {
 }
 
 struct AISpotLightSearchActionButtonComponent: View {
+    var onTap: () async -> Void
     var body: some View {
-        HStack {
-            Image(systemName: AppIconsConstants.current.CAMERA)
-                .resizable()
-                .frame(width: 20, height: 15)
+        Button(action: {
+            Task {
+                await self.onTap()
+            }
+        }) {
+            HStack {
+                Image(systemName: AppIconsConstants.current.CAMERA)
+                    .resizable()
+                    .frame(width: 20, height: 15)
+            }
+            .frame(width: 40, height: 40)
         }
-        .frame(width: 40, height: 40)
+        .buttonStyle(.plain)
         .hoverBackground(
             normal: .white.opacity(0.1),
             hover: .white.opacity(0.2),
