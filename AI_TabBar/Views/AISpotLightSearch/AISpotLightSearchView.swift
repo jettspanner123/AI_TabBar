@@ -7,6 +7,7 @@ struct AISpotLightSearchView: View {
     @State private var aiSpotLightViewModel: AISpotLightSearchViewModel?
     
     @State private var searchQuery: String = ""
+    @FocusState private var isAISpotLightTextFeildFocused: Bool
     
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -19,10 +20,12 @@ struct AISpotLightSearchView: View {
             
             // MARK: This is the main thing
             VStack(spacing: .zero) {
-                
                 if self.appGlobalStateStoreObservable?.getSearchEntryState() == .LOADING {
-                    AISpotLightSearchHeading(searchQuery: self.searchQuery)
-                        .transition(.blurReplace)
+                    AISpotLightSearchHeadingComponent(
+                        appGlobalStateStoreObservable: self.appGlobalStateStoreObservable,
+                        searchQuery: self.searchQuery
+                    )
+                    .transition(.blurReplace)
                 } else {
                     AISpotLightSearchTextInputComponent(
                         searchQuery: self.$searchQuery,
@@ -31,7 +34,6 @@ struct AISpotLightSearchView: View {
                     )
                     .transition(.blurReplace)
                 }
-                
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .background(.clear)

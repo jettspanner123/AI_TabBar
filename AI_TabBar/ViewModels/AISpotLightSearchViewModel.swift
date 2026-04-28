@@ -1,10 +1,12 @@
 import Foundation
+import SwiftUI
 
 
 @Observable
 class AISpotLightSearchViewModel {
     private let appGlobalStateStore: AppGlobalStateStore
     private let appGlobalStateStoreObservable: AppGlobalStateStoreObservable?
+    
     
     init(appGlobalStateStore: AppGlobalStateStore) {
         self.appGlobalStateStore = appGlobalStateStore
@@ -16,7 +18,6 @@ class AISpotLightSearchViewModel {
             self.appGlobalStateStoreObservable?.setDynamicExpandedWindowHeight(to: .COLLAPSED)
         }
     }
-    
     
     func search(with query: String) {
             

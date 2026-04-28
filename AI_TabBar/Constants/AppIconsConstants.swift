@@ -7,4 +7,5 @@ class AppIconsConstants {
     public let MAGNIFYING_GLASS: String = "magnifyingglass"
     public let CHEVRON_LEFT: String = "chevron.left"
     public let CHEVRON_RIGHT: String = "chevron.right"
+    public let CAMERA: String = "camera.fill"
 }
