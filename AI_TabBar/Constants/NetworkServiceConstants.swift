@@ -12,5 +12,5 @@ enum NetworkServiceEndpoints: String {
 }
 
 enum NetworkServiceSubEndpoints: String {
-    case getMCPAnswer = "mcq"
+    case getMCQAnswer = "mcq"
 }

@@ -18,7 +18,7 @@ class NetworkPostServiceHelper {
             return APIResponse(success: false, message: "Image Data Not Found!", data: nil)
         }
         
-        var requestURL = URLRequest(url: NetworkServiceHelper.current.constructURL(endpoint: .ai, subEndpoint: .getMCPAnswer)!)
+        var requestURL = URLRequest(url: NetworkServiceHelper.current.constructURL(endpoint: .ai, subEndpoint: .getMCQAnswer)!)
         requestURL.httpMethod = "POST"
         requestURL.httpBody = imageData
         
