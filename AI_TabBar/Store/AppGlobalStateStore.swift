@@ -4,6 +4,8 @@ import Foundation
 class AppGlobalStateStore {
     var searchAreaExpantionState: AppSearchAreaExpantionState = .COLLAPSED
     var searchEntryState: AppSearchEntryState = .IDLE
+    
+    var askAISearchResponse: Optional<APIResponse<AskAIQuestionResponse>> = nil
 }
 
 

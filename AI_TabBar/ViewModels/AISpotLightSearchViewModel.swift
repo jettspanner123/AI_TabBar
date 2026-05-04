@@ -19,22 +19,36 @@ class AISpotLightSearchViewModel {
         }
     }
     
-    func search(with query: String) {
-            
+    func search(with query: String) async -> Void {
+
         if self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED {
             self.appGlobalStateStoreObservable?.setDynamicExpandedWindowHeight(to: .COLLAPSED)
         }
-        
+
+        // Clear previous result before starting a new search
+        self.appGlobalStateStoreObservable?.setAskAISearchResult(to: nil)
         self.appGlobalStateStoreObservable?.setSearchEntryState(to: .LOADING)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.appGlobalStateStoreObservable?.setSearchEntryState(to: .IDLE)
+
+        do {
+            let data = try await NetworkService.current.get.getAISearchAnswer(query: query)
+
+            guard data.success, data.data != nil else {
+                self.appGlobalStateStoreObservable?.setSearchEntryState(to: .FAILURE)
+                return
+            }
+
+            self.appGlobalStateStoreObservable?.setAskAISearchResult(to: data)
+            self.appGlobalStateStoreObservable?.setSearchEntryState(to: .SUCCESS)
             self.appGlobalStateStoreObservable?.setDynamicExpandedWindowHeight(to: .EXPANDED)
+        } catch {
+            // Network or decoding error — reset state instead of staying stuck on LOADING
+            print("Search error:", error)
+            self.appGlobalStateStoreObservable?.setSearchEntryState(to: .FAILURE)
         }
     }
     
-    func makeAIBackendRequest(imageData: Data?) {
-        let response = NetworkService.current.post.getMultipleChoiseQuestionAnswer(imageData: imageData)
+    func makeAIBackendRequest(imageData: Data?) async throws {
+        let response = try? await NetworkService.current.post.getMultipleChoiseQuestionAnswer(imageData: imageData)
     }
     func takeAppScreenshot() -> Data? {
         let displayID = CGMainDisplayID()

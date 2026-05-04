@@ -53,4 +53,10 @@ class AppGlobalStateStoreObservable {
     func searchEntryEquals(to: AppSearchEntryState) -> Bool {
         return self.appGlobalStateStore.searchEntryState == to
     }
+    
+    func setAskAISearchResult(to: APIResponse<AskAIQuestionResponse>?) {
+        withAnimation {
+            self.appGlobalStateStore.askAISearchResponse = to
+        }
+    }
 }

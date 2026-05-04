@@ -1,6 +1,8 @@
 import {
     Body,
     Controller,
+    HttpException,
+    Get,
     HttpCode,
     HttpStatus,
     Post,
@@ -10,7 +12,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { AIHelper } from './ai.helper';
-import { AIService } from './ai.service';
+import { AIService } from './services/ai.service';
 import AIConstants from './ai.constants';
 import AskAIRequest from './models/dto/ask-ai.request.dto';
 import AskAIResponse from './models/dto/ask-ai.response.dto';
@@ -19,6 +21,40 @@ import MCQAnswerResponse from './models/dto/mcq-answer.response.dto';
 @Controller('ai')
 export class AIController {
     constructor(private readonly aiService: AIService) {}
+
+    private getMCQFailureResponse(error: unknown): MCQAnswerResponse {
+        if (error instanceof HttpException) {
+            const response = error.getResponse();
+
+            if (
+                response &&
+                typeof response === 'object' &&
+                'success' in response &&
+                'message' in response &&
+                'data' in response
+            ) {
+                return response as MCQAnswerResponse;
+            }
+
+            if (
+                response &&
+                typeof response === 'object' &&
+                'message' in response
+            ) {
+                const message = Array.isArray(response.message)
+                    ? response.message.join(', ')
+                    : String(response.message);
+
+                return MCQAnswerResponse.failure(message);
+            }
+        }
+
+        return MCQAnswerResponse.failure(
+            error instanceof Error
+                ? error.message
+                : 'Failed to fetch data from AI',
+        );
+    }
 
     @Post('mcq')
     @HttpCode(HttpStatus.OK)
@@ -34,11 +70,7 @@ export class AIController {
             AIHelper.validateMCQImageUpload(file);
             return await this.aiService.getMCQAnswer(file);
         } catch (error) {
-            return MCQAnswerResponse.failure(
-                'Failed to fetch data from AI',
-                error instanceof Error ? error.message : (error as string),
-                '',
-            );
+            return this.getMCQFailureResponse(error);
         }
     }
 
@@ -49,8 +81,8 @@ export class AIController {
             return await this.aiService.askAI(request.prompt);
         } catch (error) {
             return AskAIResponse.failure(
-                'Failed to ask AI',
                 error instanceof Error ? error.message : String(error),
+                null,
             );
         }
     }

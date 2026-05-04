@@ -5,27 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="530d3f70-de40-48e8-8b65-ee4d1f3e8a3b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ai/models/dto/mcq-answer.response.dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ai/models/schemas/mcq-answer.schema.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/env-validator.util.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ai/models/schemas/ask-ai-xml.schema.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AI_TabBar.xcodeproj/project.xcworkspace/xcuserdata/jettspanner123.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/../AI_TabBar.xcodeproj/project.xcworkspace/xcuserdata/jettspanner123.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AI_TabBar/ViewModels/AISpotLightSearchViewModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../AI_TabBar/ViewModels/AISpotLightSearchViewModel.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.prettierrc" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eslint.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nest-cli.json" beforeDir="false" afterPath="$PROJECT_DIR$/nest-cli.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bun.lock" beforeDir="false" afterPath="$PROJECT_DIR$/bun.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ai/ai.constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ai/ai.constants.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ai/ai.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ai/ai.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ai/ai.helper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ai/ai.helper.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ai/ai.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ai/ai.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ai/ai.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ai/ai.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ai/dto/get-mcq-answer.request.dto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ai/dto/get-mcq-answer.response.dto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/app.e2e-spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/jest-e2e.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.build.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ai/ai.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ai/models/dto/ask-ai.response.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ai/models/dto/ask-ai.response.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ai/models/schemas/ask-ai.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ai/models/schemas/ask-ai.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/env-validator.util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/env-validator.util.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +31,6 @@
     <persistenceIdMap>
       <entry key="_/Users/jettspanner123/SwiftProgramming/AI_TabBar/Server" value="3CytGYe1qWeuEGEpbcPXQkXBHQ0" />
     </persistenceIdMap>
-  </component>
-  <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="30" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -93,7 +85,7 @@
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/jettspanner123/SwiftProgramming/AI_TabBar/Server/node_modules/prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/jettspanner123/SwiftProgramming/AI_TabBar/Server/node_modules/typescript/lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -119,7 +111,9 @@
       <option name="presentableId" value="Default" />
       <updated>1777369542811</updated>
       <workItem from="1777369544115" duration="5388000" />
-      <workItem from="1777380330484" duration="2123000" />
+      <workItem from="1777380330484" duration="8466000" />
+      <workItem from="1777409068674" duration="1673000" />
+      <workItem from="1777442249811" duration="1026000" />
     </task>
     <servers />
   </component>

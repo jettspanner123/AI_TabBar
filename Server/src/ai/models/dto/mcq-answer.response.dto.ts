@@ -1,38 +1,27 @@
+export interface MCQAnswerData {
+    optionNumber: number;
+    explanation: string;
+    optionName: string;
+}
+
 export default class MCQAnswerResponse {
     private constructor(
         public readonly success: boolean,
         public readonly message: string,
-        public readonly optionNumber: number,
-        public readonly explanation: string,
-        public readonly optionName: string,
+        public readonly data: MCQAnswerData | null,
     ) {}
 
     static success(
-        optionNumber: number,
-        explanation: string,
-        optionName: string,
+        data: MCQAnswerData,
         message = 'Answer identified',
     ): MCQAnswerResponse {
-        return new MCQAnswerResponse(
-            true,
-            message,
-            optionNumber,
-            explanation,
-            optionName,
-        );
+        return new MCQAnswerResponse(true, message, data);
     }
 
     static failure(
         message: string,
-        explanation: string,
-        optionName: string,
+        data: MCQAnswerData | null = null,
     ): MCQAnswerResponse {
-        return new MCQAnswerResponse(
-            false,
-            message,
-            0,
-            explanation,
-            optionName,
-        );
+        return new MCQAnswerResponse(false, message, data);
     }
 }

@@ -34,6 +34,16 @@ struct AISpotLightSearchView: View {
                     )
                     .transition(.blurReplace)
                 }
+                
+                // MARK: Only show results if we have a valid response from the API
+                if let response = self.appGlobalStateStore.askAISearchResponse,
+                   response.success,
+                   response.data != nil {
+                    AISpotLightSearchResultComponent(
+                        result: response
+                    )
+                    .transition(.blurReplace)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .background(.clear)

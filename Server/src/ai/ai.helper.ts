@@ -1,6 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 import AIConstants from './ai.constants';
 import McqAnswerResponseDto from './models/dto/mcq-answer.response.dto';
+import {
+    AskAIXMLSchema,
+    type AskAiXmlSchemaInterface,
+} from './models/schemas/ask-ai-xml.schema';
+import { XMLValidator, XMLParser } from 'fast-xml-parser';
 
 export class AIHelper {
     private static readonly SUPPORTED_IMAGE_MIME_TYPES = new Set<string>(
@@ -37,7 +42,44 @@ export class AIHelper {
         explanation: string,
     ): never {
         throw new BadRequestException(
-            McqAnswerResponseDto.failure(message, explanation, ''),
+            McqAnswerResponseDto.failure(message, {
+                optionNumber: 0,
+                explanation,
+                optionName: '',
+            }),
         );
+    }
+
+    public static parserAskAIXMLResponse(
+        xmlString: string,
+    ): AskAiXmlSchemaInterface | null {
+        const xmlValidationResult = XMLValidator.validate(xmlString, {
+            allowBooleanAttributes: false,
+        });
+
+        if (xmlValidationResult !== true)
+            throw new Error('Invalid XML validation result!');
+
+        const parser = new XMLParser({
+            ignoreAttributes: false,
+            attributeNamePrefix: '@_',
+            parseTagValue: true,
+            parseAttributeValue: true,
+            trimValues: true,
+            allowBooleanAttributes: false,
+            processEntities: true,
+            htmlEntities: false,
+            ignoreDeclaration: false,
+            ignorePiTags: false,
+            transformTagName: (name) => name,
+            isArray: () => false,
+        });
+
+        const result = parser.parse(xmlString) as unknown;
+
+        const parsedResult = AskAIXMLSchema.safeParse(result);
+
+        if (parsedResult.success) return parsedResult.data;
+        return null;
     }
 }
