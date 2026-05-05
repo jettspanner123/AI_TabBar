@@ -8,6 +8,7 @@ struct AI_TabBarApp: App {
     
     @NSApplicationDelegateAdaptor(ApplicationDelegate.self) var applicationDelegate
     @State private var appGlobalStateStore = AppGlobalStateStore()
+    @State private var appSettingsStateStore = AppSettingsStateStore()
     
     let hotKey = HotKey(key: .space, modifiers: [.command, .shift])
     
@@ -21,6 +22,7 @@ struct AI_TabBarApp: App {
     var body: some Scene {
         Settings {}
             .environment(self.appGlobalStateStore)
+            .environment(self.appSettingsStateStore)
     }
 }
 

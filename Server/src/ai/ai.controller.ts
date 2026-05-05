@@ -17,6 +17,7 @@ import AskAIRequest from './models/dto/ask-ai.request.dto';
 import AskAIResponse from './models/dto/ask-ai.response.dto';
 import MCQAnswerResponse from './models/dto/mcq-answer.response.dto';
 import AskAIDifferenceResponse from './models/dto/ask-ai-difference.response.dto';
+import AskAICodeResponse from './models/dto/ask-ai-code.response.dto';
 
 @Controller('ai')
 export class AIController {
@@ -81,6 +82,21 @@ export class AIController {
             return await this.aiService.askAI(request.prompt);
         } catch (error) {
             return AskAIResponse.failure(
+                error instanceof Error ? error.message : String(error),
+                null,
+            );
+        }
+    }
+
+    @Post('code')
+    @HttpCode(HttpStatus.OK)
+    async askAIForCode(
+        @Body() request: AskAIRequest,
+    ): Promise<AskAICodeResponse> {
+        try {
+            return await this.aiService.askAICode(request.prompt);
+        } catch (error) {
+            return AskAICodeResponse.failure(
                 error instanceof Error ? error.message : String(error),
                 null,
             );

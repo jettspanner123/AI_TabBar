@@ -11,6 +11,7 @@ import {
 import { AskAISchema } from '../models/schemas/ask-ai.schema';
 import { MCQAnswerSchema } from '../models/schemas/mcq-answer.schema';
 import MCQAnswerResponse from '../models/dto/mcq-answer.response.dto';
+import { AIService } from './ai.service';
 
 @Injectable()
 export class AIHelperService {
@@ -61,6 +62,31 @@ export class AIHelperService {
             explanation: result.output.explanation,
             optionName: result.output.optionName,
         });
+    }
+
+    public async askAICode(prompt: string, provider: AIServiceProvider) {
+        if (provider == AIServiceProvider.GOOGLE) {
+            console.log('Ask AI Code Google Provier');
+        } else if (provider == AIServiceProvider.GROQ) {
+            console.log('Ask AI Code Groq Provider');
+        }
+
+        const result_t = await this.openAIClient.chat.completions.create({
+            model: 'openai/gpt-oss-20b',
+            messages: [
+                {
+                    role: 'system',
+                    content: AIConstants.ASK_AI_CODE_SYSTEM_PROMPT,
+                },
+                {
+                    role: 'user',
+                    content: prompt,
+                },
+            ],
+        });
+
+        const result = result_t.choices[0]?.message.content;
+        return result;
     }
 
     public async askAIDifference(prompt: string, provider: AIServiceProvider) {

@@ -8,4 +8,5 @@ class AppIconsConstants {
     public let CHEVRON_LEFT: String = "chevron.left"
     public let CHEVRON_RIGHT: String = "chevron.right"
     public let CAMERA: String = "camera.fill"
+    public let SETTINGS: String = "gear"
 }

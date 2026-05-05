@@ -10,6 +10,10 @@ import {
     AskAIDifferenceXMLSchema,
     AskAiDifferenceXmlSchemaInterface,
 } from './models/schemas/ask-ai-difference-xml.schema';
+import {
+    AskAICodeXMLSchema,
+    AskAiCodeXmlSchemaInterface,
+} from './models/schemas/ask-ai-code-xml.schema';
 
 export class AIHelper {
     private static readonly SUPPORTED_IMAGE_MIME_TYPES = new Set<string>(
@@ -52,6 +56,42 @@ export class AIHelper {
                 optionName: '',
             }),
         );
+    }
+    private static parseFromXML(xmlString: string): unknown {
+        const xmlValidationResult = XMLValidator.validate(xmlString, {
+            allowBooleanAttributes: false,
+        });
+
+        if (xmlValidationResult !== true)
+            throw new Error('Invalid XML validation result!');
+
+        const parser = new XMLParser({
+            ignoreAttributes: false,
+            attributeNamePrefix: '@_',
+            parseTagValue: true,
+            parseAttributeValue: true,
+            trimValues: true,
+            allowBooleanAttributes: false,
+            processEntities: true,
+            htmlEntities: false,
+            ignoreDeclaration: false,
+            ignorePiTags: false,
+            cdataPropName: '__cdata',
+            transformTagName: (name) => name,
+            isArray: () => false,
+        });
+
+        return parser.parse(xmlString) as unknown;
+    }
+
+    public static parseAskAICodeXMLResponse(
+        xmlString: string,
+    ): AskAiCodeXmlSchemaInterface | null {
+        const result = this.parseFromXML(xmlString);
+        console.log('Pared XML Result: ', result);
+        const parsedResult = AskAICodeXMLSchema.safeParse(result);
+        if (parsedResult.success) return parsedResult.data;
+        return null;
     }
 
     public static parseAskAIDifferenceXMLResponse(

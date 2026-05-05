@@ -15,9 +15,12 @@ class ApplicationDelegate: NSObject, NSApplicationDelegate {
         guard let mainScreen = NSScreen.main else { return }
         
         let appGlobalStateStore = AppGlobalStateStore()
+        let appSettingsStateStore = AppSettingsStateStore()
         let appGlobalStateStoreObservable = AppGlobalStateStoreObservable(appGlobalStateStore: appGlobalStateStore)
         
-        let innerContent = ContentView().environment(appGlobalStateStore)
+        let innerContent = ContentView()
+            .environment(appGlobalStateStore)
+            .environment(appSettingsStateStore)
         let frame = NSRect(x: 0, y: mainScreen.frame.height - AppRootConstants.current.SEARCH_AREA_TOP_OFFSET, width: AppRootConstants.current.WINDOW_DIMENTIONS_COLLAPSED.width, height: appGlobalStateStoreObservable.getDynamicExpandedWindowHeight())
         
         let highestPossibleLevel = CGWindowLevelForKey(.maximumWindow)

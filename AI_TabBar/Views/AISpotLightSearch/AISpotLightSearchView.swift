@@ -3,8 +3,11 @@ import SwiftUI
 struct AISpotLightSearchView: View {
     
     @Environment(AppGlobalStateStore.self) private var appGlobalStateStore
+    @Environment(AppSettingsStateStore.self) private var appSettingsStateStore
     @State private var appGlobalStateStoreObservable: AppGlobalStateStoreObservable?
     @State private var aiSpotLightViewModel: AISpotLightSearchViewModel?
+    @State private var appSettingsStateStoreObservable: AppSettingsStateStoreObservable?
+    @State private var isSettingsSheetPresented: Bool = false
     
     @State private var searchQuery: String = ""
     @FocusState private var isAISpotLightTextFeildFocused: Bool
@@ -19,34 +22,67 @@ struct AISpotLightSearchView: View {
                 }
             
             // MARK: This is the main thing
-            VStack(spacing: .zero) {
-                if self.appGlobalStateStoreObservable?.getSearchEntryState() == .LOADING {
-                    AISpotLightSearchHeadingComponent(
-                        appGlobalStateStoreObservable: self.appGlobalStateStoreObservable,
-                        searchQuery: self.searchQuery
-                    )
-                    .transition(.blurReplace)
-                } else {
-                    AISpotLightSearchTextInputComponent(
-                        searchQuery: self.$searchQuery,
-                        appGlobalStateStoreObservable: self.appGlobalStateStoreObservable,
-                        aiSpotLightViewModel: self.aiSpotLightViewModel
-                    )
-                    .transition(.blurReplace)
-                }
+            ScrollView {
                 
-                // MARK: Only show results if we have a valid response from the API
-                if let response = self.appGlobalStateStore.askAISearchResponse,
-                   response.success,
-                   response.data != nil {
-                    AISpotLightSearchResultComponent(
-                        result: response
-                    )
+                
+                // MARK: If not settings view then normal view
+                if !self.appSettingsStateStore.isSettingsViewOpen {
+                    VStack(spacing: .zero) {
+                        if self.appGlobalStateStoreObservable?.getSearchEntryState() == .LOADING {
+                            AISpotLightSearchHeadingComponent(
+                                appGlobalStateStoreObservable: self.appGlobalStateStoreObservable,
+                                searchQuery: self.searchQuery
+                            )
+                            .transition(.blurReplace)
+                        } else {
+                            AISpotLightSearchTextInputComponent(
+                                searchQuery: self.$searchQuery,
+                                appGlobalStateStoreObservable: self.appGlobalStateStoreObservable,
+                                aiSpotLightViewModel: self.aiSpotLightViewModel,
+                                appSettingsStateStoreObservable: self.appSettingsStateStoreObservable
+                            )
+                            .transition(.blurReplace)
+                        }
+                        
+                        switch self.appGlobalStateStoreObservable?.getNetworkCallType() {
+                        case .CODE:
+                            EmptyView()
+                        case .GENERAL:
+                            if let response = self.appGlobalStateStore.askAISearchResponse,
+                               self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED,
+                               response.success,
+                               response.data != nil {
+                                AISpotLightSearchResultComponent(
+                                    result: response
+                                )
+                                .transition(.blurReplace)
+                            }
+                        case .DIFFERENCE:
+                            if let response = self.appGlobalStateStore.askAISearchDifferenceResponse,
+                               self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED,
+                               response.success,
+                               response.data != nil {
+                                AISpotLightSearchDifferenceResultComponent(
+                                    result: response
+                                )
+                                .transition(.blurReplace)
+                            }
+                        case nil:
+                            EmptyView()
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .offset(y: self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED ? 0 : -8)
                     .transition(.blurReplace)
+
+                // MARK: If settings view then settings view
+                } else {
+                    AISpotLightSearchSettingsView()
+                        .transition(.blurReplace)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .topLeading)
-            .background(.clear)
+            .scrollDisabled(self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() != .EXPANDED)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(height: self.appGlobalStateStoreObservable?.getDynamicExpandedWindowHeight())
         .background(.clear)
@@ -61,6 +97,7 @@ struct AISpotLightSearchView: View {
         .onAppear {
             self.appGlobalStateStoreObservable = AppGlobalStateStoreObservable(appGlobalStateStore: self.appGlobalStateStore)
             self.aiSpotLightViewModel = AISpotLightSearchViewModel(appGlobalStateStore: self.appGlobalStateStore)
+            self.appSettingsStateStoreObservable = AppSettingsStateStoreObservable(appSettingsStateStore: self.appSettingsStateStore, appGlobalStateStoreObservable: self.appGlobalStateStoreObservable)
         }
     }
 }

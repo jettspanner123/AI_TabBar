@@ -18,6 +18,14 @@ class AppGlobalStateStoreObservable {
         return self.appGlobalStateStore.searchAreaExpantionState == .EXPANDED ? AppRootConstants.current.WINDOW_DIMENTIONS_EXPANDED.height : AppRootConstants.current.WINDOW_DIMENTIONS_COLLAPSED.height
     }
     
+    func getIsAIAskResultNull() -> Bool  {
+        return self.appGlobalStateStore.askAISearchResponse == nil
+    }
+    
+    func getIsAIDifferenceAskResultNull() -> Bool {
+        return self.appGlobalStateStore.askAISearchDifferenceResponse == nil
+    }
+    
     func setDynamicExpandedWindowHeight(to: AppSearchAreaExpantionState) {
         withAnimation {
             self.appGlobalStateStore.searchAreaExpantionState = to
@@ -57,6 +65,23 @@ class AppGlobalStateStoreObservable {
     func setAskAISearchResult(to: APIResponse<AskAIQuestionResponse>?) {
         withAnimation {
             self.appGlobalStateStore.askAISearchResponse = to
+        }
+    }
+    
+    func setNetworkCallType(to: NetworkCallType) -> Void {
+        if to == self.appGlobalStateStore.currentSelectedNetworkCallType { return }
+        withAnimation {
+            self.appGlobalStateStore.currentSelectedNetworkCallType = to
+        }
+    }
+    
+    func getNetworkCallType() -> NetworkCallType {
+        return self.appGlobalStateStore.currentSelectedNetworkCallType
+    }
+    
+    func setAskAISearchDifferenceResult(to: APIResponse<AskAIDifferenceQuestionResponse>?) {
+        withAnimation {
+            self.appGlobalStateStore.askAISearchDifferenceResponse = to
         }
     }
 }

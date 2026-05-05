@@ -1,5 +1,4 @@
 import { AskAiDifferenceXmlSchemaInterface } from '../schemas/ask-ai-difference-xml.schema';
-import { AskAiXmlSchemaInterface } from '../schemas/ask-ai-xml.schema';
 
 export default class AskAIDifferenceResponse {
     private constructor(

@@ -14,6 +14,6 @@ struct SectionHeader: View {
             .font(.system(size: 15, weight: .bold, design: .rounded))
             .foregroundStyle(.white.opacity(0.5))
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 5)
+            .padding(.top, 10)
     }
 }

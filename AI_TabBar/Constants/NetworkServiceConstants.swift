@@ -7,10 +7,14 @@ class NetworkServiceConstants {
     
 }
 
+enum NetworkCallType: String, CaseIterable {
+    case CODE = "Code" ,GENERAL = "General",DIFFERENCE = "Difference"
+}
+
 enum NetworkServiceEndpoints: String {
     case ai = "ai"
 }
 
 enum NetworkServiceSubEndpoints: String {
-    case getMCQAnswer = "mcq", askAI = "ask"
+    case getMCQAnswer = "mcq", askAI = "ask", code = "code", difference = "difference"
 }

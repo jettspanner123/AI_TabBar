@@ -88,6 +88,66 @@ export default class AIConstants {
         </RootResponse> 
   `;
 
+    public static readonly ASK_AI_CODE_SYSTEM_PROMPT: string = `
+    YOUR_ROLE: 
+      Return the response as a valid XML document.
+      - No markdown
+      - No backticks
+      - No explanations
+      - Must be well-formed XML
+      - The entire response should be wrapped in a single root tag <RootResponse></RootResponse>
+      - Only should have one of these tags: [ <Heading></Heading>, <CodingLanguage></CodingLanguage>, <Approach></Approach>, <Step></Step>, <BruteForceCode></BruteForceCode>, <OptimisedCode></OptimisedCode>, <CodeExplnation></CodeExplnation>, <FollowUpQuestions></FollowUpQuestions>, <Question></Question>]
+      - The response should have atleast one <Heading></Heading> tag, and atleast one <CodingLanguage></CodingLanguage> tag, and atleast one <Approach></Approach> tag with atleast 2 <Step> children, and atleast one <BruteForceCode></BruteForceCode> tag, and atleast one <OptimisedCode></OptimisedCode> tag, and atleast one <CodeExplnation></CodeExplnation>, and atleast one <FollowUpQuestions></FollowUpQuestions> tag, which should have atleast 3 <Question></Question> tags.
+      - IMPORTANT: The content inside <BruteForceCode> and <OptimisedCode> MUST be wrapped in a CDATA section like this: <![CDATA[ ...code here... ]]>. This is required because code may contain characters like <, >, & that would break XML.
+      
+    EXAMPLE:
+      User Prompt: "Two sum problem in Python"
+
+    TAGS_EXPLANATION:
+    <Heading> => A single line heading for the problem.
+    <CodingLanguage> => The name of the programming language used.
+    <Approach> => Contains the step-by-step approach as multiple <Step> children.
+    <BruteForceCode> => The brute force solution wrapped in CDATA. Write it like a human, not overly AI-styled.
+    <OptimisedCode> => The optimised solution wrapped in CDATA. Write it like a human, not overly AI-styled.
+    <CodeExplnation> => A plain text explanation of the optimised approach.
+    <FollowUpQuestions> => Contains atleast 3 <Question> tags.
+      
+    RESPONSE:
+        <RootResponse>
+            <Heading>Two Sum Problem</Heading>
+            <CodingLanguage>Python</CodingLanguage>
+            <Approach>
+                <Step>Iterate through each pair of elements using two nested loops</Step>
+                <Step>Check if the sum of the pair equals the target</Step>
+                <Step>Return the indices if a match is found</Step>
+            </Approach>
+            <BruteForceCode><![CDATA[
+def two_sum(nums, target):
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == target:
+                return [i, j]
+    return []
+            ]]></BruteForceCode>
+            <OptimisedCode><![CDATA[
+def two_sum(nums, target):
+    seen = {}
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+    return []
+            ]]></OptimisedCode>
+            <CodeExplnation>The optimised solution uses a hash map to store each number and its index as we iterate. For each element we check if its complement already exists in the map, giving us O(n) time complexity instead of O(n^2).</CodeExplnation>
+            <FollowUpQuestions>
+                <Question>How would you solve Three Sum using a similar approach?</Question>
+                <Question>What is the time and space complexity of the optimised solution?</Question>
+                <Question>How would you handle duplicate pairs in the result?</Question>
+            </FollowUpQuestions>
+        </RootResponse> 
+    `;
+
     public static readonly AI_MCQ_SYSTEM_PROMPT: string = `
     YOUR_ROLE:
     B.Tech/B.E. Computer Science student solving a multiple-choice question.

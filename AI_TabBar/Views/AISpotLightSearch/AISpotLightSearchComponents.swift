@@ -6,9 +6,11 @@ struct AISpotLightSearchTextInputComponent: View {
     
     @Binding var searchQuery: String
     @FocusState private var textFeildFocusState: Bool
+    @State private var selectedRequestType: String = NetworkCallType.GENERAL.rawValue
     
     var appGlobalStateStoreObservable: AppGlobalStateStoreObservable?
     var aiSpotLightViewModel: AISpotLightSearchViewModel?
+    var appSettingsStateStoreObservable: AppSettingsStateStoreObservable?
     
     
     func handleScreenShotSearchButton() async throws -> Void {
@@ -16,7 +18,16 @@ struct AISpotLightSearchTextInputComponent: View {
     }
     
     func handleAskAISubmit() async -> Void {
-        await self.aiSpotLightViewModel?.search(with: self.searchQuery)
+        switch NetworkCallType(rawValue: self.selectedRequestType) {
+        case .DIFFERENCE:
+            await self.aiSpotLightViewModel?.searchDifference(with: self.searchQuery)
+        case .GENERAL:
+            await self.aiSpotLightViewModel?.search(with: self.searchQuery)
+        case .CODE:
+            return
+        default:
+            return
+        }
     }
     
     
@@ -26,7 +37,15 @@ struct AISpotLightSearchTextInputComponent: View {
                 .resizable()
                 .frame(width: 25, height: 25)
                 .padding(.leading, 20)
-                .padding(.trailing, 15)
+                .padding(.trailing, 10)
+            
+            
+            AISpotLightSearchCustomSegmentComponent(
+                selectedSegment: self.$selectedRequestType,
+                caseArray: NetworkCallType.allCases.map {$0.rawValue}
+            )
+            .padding(.trailing, 10)
+            .padding(.leading, 5)
             
             TextField("Search", text: self.$searchQuery)
                 .textFieldStyle(PlainTextFieldStyle())
@@ -42,16 +61,23 @@ struct AISpotLightSearchTextInputComponent: View {
             Spacer()
             
             HStack {
-                AISpotLightSearchActionButtonComponent() {
+                AISpotLightSearchActionButtonComponent(image: AppIconsConstants.current.CAMERA) {
                     Task {
                         try? await self.handleScreenShotSearchButton()
                     }
+                }
+                
+                AISpotLightSearchActionButtonComponent(image: AppIconsConstants.current.SETTINGS) {
+                    self.appSettingsStateStoreObservable?.handleShowSettingsView()
                 }
             }
             .padding(.horizontal, self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED ? 20 : 10)
             
         }
         .frame(maxWidth: .infinity)
+        .onChange(of: self.selectedRequestType) {
+            self.appGlobalStateStoreObservable?.setNetworkCallType(to: NetworkCallType(rawValue: self.selectedRequestType) ?? .GENERAL)
+        }
         .onAppear {
             DispatchQueue.main.async {
                 self.textFeildFocusState = true
@@ -65,7 +91,34 @@ struct AISpotLightSearchTextInputComponent: View {
     }
 }
 
+struct AISpotLightSearchCustomSegmentComponent: View {
+    @Binding var selectedSegment: String
+    var caseArray: Array<String>
+    var body: some View {
+        HStack(spacing: 0) {
+            ForEach(self.caseArray, id: \.self) { caseName in
+                Text(caseName)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 10)
+                    .hoverBackground(normal: self.selectedSegment == caseName ? .white.opacity(0.30) : .white.opacity(0.08), hover: .white.opacity(0.15))
+                    .onTapGesture {
+                        if self.selectedSegment == caseName { return }
+                        withAnimation {
+                            self.selectedSegment = caseName
+                        }
+                    }
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .overlay {
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(.white.opacity(0.1), lineWidth: 1)
+        }
+    }
+}
+
 struct AISpotLightSearchActionButtonComponent: View {
+    var image: String
     var onTap: () async -> Void
     var body: some View {
         Button(action: {
@@ -74,7 +127,7 @@ struct AISpotLightSearchActionButtonComponent: View {
             }
         }) {
             HStack {
-                Image(systemName: AppIconsConstants.current.CAMERA)
+                Image(systemName: self.image)
                     .resizable()
                     .frame(width: 20, height: 15)
             }
@@ -113,9 +166,9 @@ struct AISpotLightSearchHeadingComponent: View {
 }
 
 struct AISpotLightSearchResultComponent: View {
-
+    
     let result: APIResponse<AskAIQuestionResponse>
-
+    
     var body: some View {
         if let rootResponse = result.data?.RootResponse {
             VStack {
@@ -124,7 +177,7 @@ struct AISpotLightSearchResultComponent: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top)
-
+                
                 Text(rootResponse.SingleLineAnswer)
                     .font(.system(size: 20, weight: .regular, design: .rounded))
                     .foregroundStyle(.white)
@@ -149,7 +202,7 @@ struct AISpotLightSearchResultComponent: View {
                 
                 ForEach(rootResponse.FollowUpQuestions.Question, id: \.self) { question in
                     HStack {
-                       Text(question)
+                        Text(question)
                             .font(.system(size: 20, weight: .medium, design: .rounded))
                             .foregroundStyle(.white)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -163,6 +216,132 @@ struct AISpotLightSearchResultComponent: View {
                     .hoverBackground(normal: .white.opacity(0.03), hover: .white.opacity(0.05))
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                 }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 25)
+        }
+    }
+}
+
+
+struct AISpotLightSearchDifferenceResultComponent: View {
+    
+    let result: APIResponse<AskAIDifferenceQuestionResponse>
+    
+    var body: some View {
+        if let rootResponse = result.data?.RootResponse {
+            VStack {
+                Text(rootResponse.Heading)
+                    .font(.system(size: 30, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top)
+                
+                Text(rootResponse.SingleLineDifference)
+                    .font(.system(size: 20, weight: .regular, design: .rounded))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(.white.opacity(0.09))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .padding(.top, 1)
+                
+                SectionHeader(text: "Full Difference")
+                
+                VStack {
+                    HStack {
+                        Text(rootResponse.Topics.TopicOne)
+                            .font(.system(size: 20, weight: .regular, design: .rounded))
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(.white.opacity(0.09))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        
+                        Text(rootResponse.Topics.TopicTwo)
+                            .font(.system(size: 20, weight: .regular, design: .rounded))
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(.white.opacity(0.09))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.bottom, 10)
+                    
+                    
+                    ForEach(rootResponse.Differences.Difference.indices, id: \.self) { differenceIndex in
+                        HStack {
+                            Text(rootResponse.Differences.Difference[differenceIndex].FirstTopicDifferencePoint)
+                                .font(.system(size: 20, weight: .regular, design: .rounded))
+                                .foregroundStyle(.white)
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(height: 65)
+                                .frame(maxWidth: .infinity, maxHeight: 65, alignment: .leading)
+                                .padding()
+                                .background(.white.opacity(0.02))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .overlay(alignment: .leading) {
+                                    HStack {
+                                        
+                                    }
+                                    .frame(width: 1)
+                                    .frame(maxHeight: .infinity)
+                                    .background(.white)
+                                }
+                            
+                            Text(rootResponse.Differences.Difference[differenceIndex].SecondTopicDifferencePoint)
+                                .font(.system(size: 20, weight: .regular, design: .rounded))
+                                .foregroundStyle(.white)
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(height: 65)
+                                .frame(maxWidth: .infinity, maxHeight: 65, alignment: .leading)
+                                .padding()
+                                .background(.white.opacity(0.02))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .overlay(alignment: .leading) {
+                                    HStack {
+                                        
+                                    }
+                                    .frame(width: 1)
+                                    .frame(maxHeight: .infinity)
+                                    .background(.white)
+                                }
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                
+                
+                SectionHeader(text: "Follow Up Questions")
+                
+                ForEach(rootResponse.FollowUpQuestions.Question, id: \.self) { question in
+                    HStack {
+                        Text(question)
+                            .font(.system(size: 20, weight: .medium, design: .rounded))
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Spacer()
+                        
+                        Image(systemName: AppIconsConstants.current.CHEVRON_RIGHT)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .hoverBackground(normal: .white.opacity(0.03), hover: .white.opacity(0.05))
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                }
+                
+                
+                // MARK: Spacer at bottom
+                HStack {
+                    
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 25)
