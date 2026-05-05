@@ -63,6 +63,31 @@ export class AIHelperService {
         });
     }
 
+    public async askAIDifference(prompt: string, provider: AIServiceProvider) {
+        if (provider == AIServiceProvider.GOOGLE) {
+            console.log('Ask AI Difference Google Provier');
+        } else if (provider == AIServiceProvider.GROQ) {
+            console.log('Ask AI Difference Groq Provider');
+        }
+
+        const result_t = await this.openAIClient.chat.completions.create({
+            model: 'openai/gpt-oss-20b',
+            messages: [
+                {
+                    role: 'system',
+                    content: AIConstants.ASK_AI_DIFFERENCE_SYSTEM_PROMPT,
+                },
+                {
+                    role: 'user',
+                    content: prompt,
+                },
+            ],
+        });
+        const result = result_t.choices[0]?.message.content;
+
+        return result;
+    }
+
     public async askAI(
         prompt: string,
         provider: AIServiceProvider = AIServiceProvider.GROQ,

@@ -15,7 +15,7 @@ struct AISpotLightSearchView: View {
                 .cornerRadius(12)
                 .overlay {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(.app.opacity(0.35))
+                        .fill(.app.opacity(0.5))
                 }
             
             // MARK: This is the main thing
