@@ -4,6 +4,7 @@ import Foundation
 class AppGlobalStateStore {
     var searchAreaExpantionState: AppSearchAreaExpantionState = .COLLAPSED
     var searchEntryState: AppSearchEntryState = .IDLE
+    var searchMode: AppSearchMode = .SEARCH
     
     var currentSelectedNetworkCallType: NetworkCallType = .GENERAL
     var askAISearchResponse: Optional<APIResponse<AskAIQuestionResponse>> = nil
@@ -18,4 +19,8 @@ enum AppSearchAreaExpantionState {
 
 enum AppSearchEntryState {
     case IDLE, TYPING, LOADING, SUCCESS, FAILURE
+}
+
+enum AppSearchMode {
+    case SEARCH, CHAT, AGENT
 }

@@ -4,7 +4,7 @@ import SwiftUI
 struct HoverAnimationExtension: ViewModifier {
     var backgroundColor: Color
     var hoverColor: Color
-    var animation: Animation = .easeInOut(duration: 0.3)
+    var animation: Animation? = .easeInOut(duration: 0.3)
     var cursor: NSCursor = .pointingHand
     
     @State private var isHovered: Bool = false
@@ -18,7 +18,13 @@ struct HoverAnimationExtension: ViewModifier {
                 } else {
                     NSCursor.arrow.set()
                 }
-                withAnimation(self.animation) {
+                
+                if self.animation == nil {
+                    self.isHovered = isHovered
+                    return
+                }
+                
+                withAnimation {
                     self.isHovered = isHovered
                 }
             }
@@ -26,10 +32,19 @@ struct HoverAnimationExtension: ViewModifier {
 }
 
 extension View {
+    func pointerMouseHoverEffect() -> some View {
+        self.onHover { hoverState in
+            if hoverState {
+                NSCursor.pointingHand.set()
+                return
+            }
+            NSCursor.arrow.set()
+        }
+    }
     func hoverBackground(
         normal: Color,
         hover: Color,
-        animation: Animation = .easeInOut(duration: 0.3),
+        animation: Animation? = .easeInOut(duration: 0.3),
         cursor: NSCursor = .pointingHand
     ) -> some View {
         self.modifier(

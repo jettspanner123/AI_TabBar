@@ -17,7 +17,7 @@ struct AISpotLightSearchSettingsView: View {
     var body: some View {
         VStack {
             HStack {
-                AISpotLightSearchActionButtonComponent(image: AppIconsConstants.current.CHEVRON_LEFT) {
+                AISpotLightSearchActionButtonComponent(image: AppIconsConstants.current.CHEVRON_LEFT, type: .CIRCLE) {
                     self.appSettingsStateStoreObservable?.handleHideSettingsView()
                 }
                 

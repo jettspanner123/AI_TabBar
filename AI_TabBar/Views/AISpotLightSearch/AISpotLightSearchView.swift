@@ -21,75 +21,14 @@ struct AISpotLightSearchView: View {
                         .fill(.app.opacity(0.5))
                 }
             
-            // MARK: This is the main thing
-            ScrollView {
-                
-                
-                // MARK: If not settings view then normal view
-                if !self.appSettingsStateStore.isSettingsViewOpen {
-                    VStack(spacing: .zero) {
-                        if self.appGlobalStateStoreObservable?.getSearchEntryState() == .LOADING {
-                            AISpotLightSearchHeadingComponent(
-                                appGlobalStateStoreObservable: self.appGlobalStateStoreObservable,
-                                searchQuery: self.searchQuery
-                            )
-                            .transition(.blurReplace)
-                        } else {
-                            AISpotLightSearchTextInputComponent(
-                                searchQuery: self.$searchQuery,
-                                appGlobalStateStoreObservable: self.appGlobalStateStoreObservable,
-                                aiSpotLightViewModel: self.aiSpotLightViewModel,
-                                appSettingsStateStoreObservable: self.appSettingsStateStoreObservable
-                            )
-                            .transition(.blurReplace)
-                        }
-                        
-                        switch self.appGlobalStateStoreObservable?.getNetworkCallType() {
-                        case .CODE:
-                            if let response = self.appGlobalStateStore.askAISearchCodeResponse,
-                               self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED,
-                               response.success,
-                               response.data != nil {
-                                AISpotLightSearchCodeResultComponent(
-                                    result: response
-                                )
-                            }
-                        case .GENERAL:
-                            if let response = self.appGlobalStateStore.askAISearchResponse,
-                               self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED,
-                               response.success,
-                               response.data != nil {
-                                AISpotLightSearchResultComponent(
-                                    result: response
-                                )
-                                .transition(.blurReplace)
-                            }
-                        case .DIFFERENCE:
-                            if let response = self.appGlobalStateStore.askAISearchDifferenceResponse,
-                               self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED,
-                               response.success,
-                               response.data != nil {
-                                AISpotLightSearchDifferenceResultComponent(
-                                    result: response
-                                )
-                                .transition(.blurReplace)
-                            }
-                        case nil:
-                            EmptyView()
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .offset(y: self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED ? 0 : -8)
-                    .transition(.blurReplace)
-
-                // MARK: If settings view then settings view
-                } else {
-                    AISpotLightSearchSettingsView()
-                        .transition(.blurReplace)
-                }
+            switch self.appGlobalStateStore.searchMode {
+            case .AGENT:
+                EmptyView()
+            case .CHAT:
+                AppChatModeView()
+            case .SEARCH:
+                AppSearchModeView(searchQuery: self.$searchQuery)
             }
-            .scrollDisabled(self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() != .EXPANDED)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(height: self.appGlobalStateStoreObservable?.getDynamicExpandedWindowHeight())
         .background(.clear)
@@ -98,9 +37,6 @@ struct AISpotLightSearchView: View {
                 .stroke(.white.opacity(0.5), lineWidth: 1)
         }
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .onChange(of: self.searchQuery) {
-            self.aiSpotLightViewModel?.handleEmptySearchQueryState(query: searchQuery)
-        }
         .onAppear {
             self.appGlobalStateStoreObservable = AppGlobalStateStoreObservable(appGlobalStateStore: self.appGlobalStateStore)
             self.aiSpotLightViewModel = AISpotLightSearchViewModel(appGlobalStateStore: self.appGlobalStateStore)
