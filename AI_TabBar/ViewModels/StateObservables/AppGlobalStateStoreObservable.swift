@@ -68,6 +68,7 @@ class AppGlobalStateStoreObservable {
         }
     }
     
+    
     func setNetworkCallType(to: NetworkCallType) -> Void {
         if to == self.appGlobalStateStore.currentSelectedNetworkCallType { return }
         withAnimation {
@@ -82,6 +83,12 @@ class AppGlobalStateStoreObservable {
     func setAskAISearchDifferenceResult(to: APIResponse<AskAIDifferenceQuestionResponse>?) {
         withAnimation {
             self.appGlobalStateStore.askAISearchDifferenceResponse = to
+        }
+    }
+    
+    func setAskAISearchCodeResult(to: APIResponse<AskAICodeQuestionResponse>?) {
+        withAnimation {
+            self.appGlobalStateStore.askAISearchCodeResponse = to
         }
     }
 }

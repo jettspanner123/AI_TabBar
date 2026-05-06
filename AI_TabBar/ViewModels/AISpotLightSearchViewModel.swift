@@ -45,6 +45,32 @@ class AISpotLightSearchViewModel {
         }
     }
     
+    func searchCode(with query: String) async -> Void {
+        if self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED {
+            self.appGlobalStateStoreObservable?.setDynamicExpandedWindowHeight(to: .COLLAPSED)
+        }
+        
+        self.appGlobalStateStoreObservable?.setAskAISearchCodeResult(to: nil)
+        self.appGlobalStateStoreObservable?.setSearchEntryState(to: .LOADING)
+        
+        do {
+            let data = try await NetworkService.current.get.getAISearchCodeAnswer(query: query)
+
+            guard data.success, data.data != nil else {
+                self.appGlobalStateStoreObservable?.setSearchEntryState(to: .FAILURE)
+                return
+            }
+
+            self.appGlobalStateStoreObservable?.setAskAISearchCodeResult(to: data)
+            self.appGlobalStateStoreObservable?.setSearchEntryState(to: .SUCCESS)
+            self.appGlobalStateStoreObservable?.setDynamicExpandedWindowHeight(to: .EXPANDED)
+        } catch {
+            print("Search error:", error)
+            self.appGlobalStateStoreObservable?.setAskAISearchCodeResult(to: nil)
+            self.appGlobalStateStoreObservable?.setSearchEntryState(to: .FAILURE)
+        }
+    }
+    
     func search(with query: String) async -> Void {
 
         if self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED {

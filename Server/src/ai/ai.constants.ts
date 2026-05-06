@@ -98,7 +98,7 @@ export default class AIConstants {
       - Must be well-formed XML
       - The entire response should be wrapped in a single root tag <RootResponse></RootResponse>
       - Only should have one of these tags: [ <Heading></Heading>, <CodingLanguage></CodingLanguage>, <Approach></Approach>, <Step></Step>, <BruteForceCode></BruteForceCode>, <OptimisedCode></OptimisedCode>, <CodeExplnation></CodeExplnation>, <FollowUpQuestions></FollowUpQuestions>, <Question></Question>]
-      - The response should have atleast one <Heading></Heading> tag, and atleast one <CodingLanguage></CodingLanguage> tag, and atleast one <Approach></Approach> tag with atleast 2 <Step> children, and atleast one <BruteForceCode></BruteForceCode> tag, and atleast one <OptimisedCode></OptimisedCode> tag, and atleast one <CodeExplnation></CodeExplnation>, and atleast one <FollowUpQuestions></FollowUpQuestions> tag, which should have atleast 3 <Question></Question> tags.
+      - The response should have atleast one <Heading></Heading> tag, and atleast one <CodingLanguage></CodingLanguage> tag, and atleast one <Approach></Approach> tag with atleast 2 <Step> children, and atleast one <BruteForceCode></BruteForceCode> tag, and exactly one <BruteForceCodeProsAndCons></BruteForceCodeProsAndCons> where it should have exactly one <Pros> and exactly one <Cons>,and atleast one <OptimisedCode></OptimisedCode> tag,and exactly one <OptimisedCodeProsAndCons></OptimisedCodeProsAndCons> where it should have exactly one <Pros> and exactly one <Cons>, and atleast one <CodeExplnation></CodeExplnation>, and atleast one <FollowUpQuestions></FollowUpQuestions> tag, which should have atleast 3 <Question></Question> tags.
       - IMPORTANT: The content inside <BruteForceCode> and <OptimisedCode> MUST be wrapped in a CDATA section like this: <![CDATA[ ...code here... ]]>. This is required because code may contain characters like <, >, & that would break XML.
       
     EXAMPLE:
@@ -109,7 +109,11 @@ export default class AIConstants {
     <CodingLanguage> => The name of the programming language used.
     <Approach> => Contains the step-by-step approach as multiple <Step> children.
     <BruteForceCode> => The brute force solution wrapped in CDATA. Write it like a human, not overly AI-styled.
+    <BruteForceCodeProsAndCons> => This should have all the pros and cons for the brute force code. 
     <OptimisedCode> => The optimised solution wrapped in CDATA. Write it like a human, not overly AI-styled.
+    <OptimisedCodeProsAndCons> => This should have all the pros and cons for the optimisex code.
+    <Pros> => This should contain a single line of pros.
+    <Cons> => This should contain a single line of cons.
     <CodeExplnation> => A plain text explanation of the optimised approach.
     <FollowUpQuestions> => Contains atleast 3 <Question> tags.
       
@@ -130,6 +134,10 @@ def two_sum(nums, target):
                 return [i, j]
     return []
             ]]></BruteForceCode>
+            <BruteForceCodeProsAndCons>
+                <Pros>Simple in terms of readibility.</Pros>
+                <Cons>Has a time complexity of n^2 because of nested loops.</Cons>
+            </BruteForceCodeProsAndCons>
             <OptimisedCode><![CDATA[
 def two_sum(nums, target):
     seen = {}
@@ -140,6 +148,10 @@ def two_sum(nums, target):
         seen[num] = i
     return []
             ]]></OptimisedCode>
+            <OptimisedCodeProsAndCons>
+                <Pros>Better time complexity.</Pros>
+                <Cons>Requires extra space.</Cons>
+            </OptimisedCodeProsAndCons>
             <CodeExplnation>The optimised solution uses a hash map to store each number and its index as we iterate. For each element we check if its complement already exists in the map, giving us O(n) time complexity instead of O(n^2).</CodeExplnation>
             <FollowUpQuestions>
                 <Question>How would you solve Three Sum using a similar approach?</Question>

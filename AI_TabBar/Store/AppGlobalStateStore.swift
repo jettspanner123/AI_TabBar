@@ -8,6 +8,7 @@ class AppGlobalStateStore {
     var currentSelectedNetworkCallType: NetworkCallType = .GENERAL
     var askAISearchResponse: Optional<APIResponse<AskAIQuestionResponse>> = nil
     var askAISearchDifferenceResponse: Optional<APIResponse<AskAIDifferenceQuestionResponse>> = nil
+    var askAISearchCodeResponse: Optional<APIResponse<AskAICodeQuestionResponse>> = nil
 }
 
 

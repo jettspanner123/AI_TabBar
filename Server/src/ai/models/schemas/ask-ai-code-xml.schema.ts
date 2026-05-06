@@ -15,7 +15,15 @@ export const AskAICodeXMLSchema = z.object({
             Step: z.array(z.string()),
         }),
         BruteForceCode: cdataOrString,
+        BruteForceCodeProsAndCons: z.object({
+            Pros: z.string(),
+            Cons: z.string(),
+        }),
         OptimisedCode: cdataOrString,
+        OptimisedCodeProsAndCons: z.object({
+            Pros: z.string(),
+            Cons: z.string(),
+        }),
         CodeExplnation: z.string(),
         FollowUpQuestions: z.object({
             Question: z.array(z.string()),

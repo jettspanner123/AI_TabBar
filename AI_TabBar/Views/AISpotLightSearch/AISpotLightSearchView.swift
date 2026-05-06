@@ -46,7 +46,14 @@ struct AISpotLightSearchView: View {
                         
                         switch self.appGlobalStateStoreObservable?.getNetworkCallType() {
                         case .CODE:
-                            EmptyView()
+                            if let response = self.appGlobalStateStore.askAISearchCodeResponse,
+                               self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED,
+                               response.success,
+                               response.data != nil {
+                                AISpotLightSearchCodeResultComponent(
+                                    result: response
+                                )
+                            }
                         case .GENERAL:
                             if let response = self.appGlobalStateStore.askAISearchResponse,
                                self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED,
