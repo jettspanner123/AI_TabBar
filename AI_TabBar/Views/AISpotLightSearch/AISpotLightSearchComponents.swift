@@ -98,9 +98,10 @@ struct AISpotLightSearchCustomSegmentComponent: View {
         HStack(spacing: 0) {
             ForEach(self.caseArray, id: \.self) { caseName in
                 Text(caseName)
+                    .foregroundStyle(self.selectedSegment == caseName ? .black : .white)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 10)
-                    .hoverBackground(normal: self.selectedSegment == caseName ? .white.opacity(0.30) : .white.opacity(0.08), hover: .white.opacity(0.15))
+                    .hoverBackground(normal: self.selectedSegment == caseName ? .white : .white.opacity(0.08), hover: .white.opacity(0.15))
                     .onTapGesture {
                         if self.selectedSegment == caseName { return }
                         withAnimation {
