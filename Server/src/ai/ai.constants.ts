@@ -11,6 +11,7 @@ export default class AIConstants {
     ] as const;
 
     public static readonly AI_MODEL: string = 'gemini-2.5-flash';
+    public static readonly AI_REFETCH_LIMIT: number = 3;
 
     public static readonly ASK_AI_SYSTEM_PROMPT: string = `
     YOUR_ROLE: 

@@ -44,9 +44,13 @@ class AppSettingsStateStoreObservable {
     }
     
     func handleHideSettingsView() -> Void {
-//        if (self.appGlobalStateStoreObservable?.getIsAIAskResultNull()) != nil || ((self.appGlobalStateStoreObservable?.getIsAIDifferenceAskResultNull()) != nil) {
-//            
-//        }
+        if (self.appGlobalStateStoreObservable?.getIsAIAskResultNull()) == nil && ((self.appGlobalStateStoreObservable?.getIsAIDifferenceAskResultNull()) == nil) {
+            withAnimation {
+                self.setShowSettingsView(to: false)
+            }
+            self.appGlobalStateStoreObservable?.setDynamicExpandedWindowHeight(to: .COLLAPSED)
+            return
+        }
         withAnimation {
             self.setShowSettingsView(to: false)
         }

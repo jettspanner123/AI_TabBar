@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { AIHelperService, AIServiceProvider } from './ai-helper.service';
 import AskAIDifferenceResponse from '../models/dto/ask-ai-difference.response.dto';
 import AskAICodeResponse from '../models/dto/ask-ai-code.response.dto';
+import AIConstants from '../ai.constants';
 
 @Injectable()
 export class AIService {
@@ -51,18 +52,42 @@ export class AIService {
     }
 
     async askAI(prompt: string): Promise<AskAIResponse> {
-        const result = await this.aiHelperService.askAI(
-            prompt,
-            AIServiceProvider.GROQ,
-        );
+        let lastError: string = 'Failed Generating AI Response!';
 
-        if (!result)
-            return AskAIResponse.failure(
-                'Failed Generating AI Response!',
-                null,
-            );
+        for (
+            let attempt = 0;
+            attempt < AIConstants.AI_REFETCH_LIMIT;
+            attempt++
+        ) {
+            let result: string | null | undefined;
 
-        const xmlParsedResponse = AIHelper.parserAskAIXMLResponse(result);
-        return AskAIResponse.success(xmlParsedResponse);
+            try {
+                result = await this.aiHelperService.askAI(
+                    prompt,
+                    AIServiceProvider.GROQ,
+                );
+            } catch (e) {
+                lastError = e instanceof Error ? e.message : String(e);
+                continue;
+            }
+
+            if (!result) {
+                lastError = 'Failed Generating AI Response!';
+                continue;
+            }
+
+            try {
+                const xmlParsedResponse =
+                    AIHelper.parserAskAIXMLResponse(result);
+                if (xmlParsedResponse) {
+                    return AskAIResponse.success(xmlParsedResponse);
+                }
+                lastError = 'Failed To Parse XML!';
+            } catch (e) {
+                lastError = e instanceof Error ? e.message : String(e);
+            }
+        }
+
+        return AskAIResponse.failure(lastError, null);
     }
 }
