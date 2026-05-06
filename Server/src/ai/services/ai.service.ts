@@ -16,39 +16,83 @@ export class AIService {
     }
 
     async askAIDifference(prompt: string): Promise<AskAIDifferenceResponse> {
-        const result = await this.aiHelperService.askAIDifference(
-            prompt,
-            AIServiceProvider.GROQ,
-        );
+        let lastError: string = 'Failed Generating AI Response!';
 
-        if (!result)
-            return AskAIDifferenceResponse.failure(
-                'Failed Generating AI Response!',
-                null,
-            );
+        for (
+            let attempt = 0;
+            attempt < AIConstants.AI_REFETCH_LIMIT;
+            attempt++
+        ) {
+            let result: string | null | undefined;
 
-        const xmlParsedResponse =
-            AIHelper.parseAskAIDifferenceXMLResponse(result);
-        return AskAIDifferenceResponse.success(xmlParsedResponse);
+            try {
+                result = await this.aiHelperService.askAIDifference(
+                    prompt,
+                    AIServiceProvider.GROQ,
+                );
+            } catch (e) {
+                lastError = e instanceof Error ? e.message : String(e);
+                continue;
+            }
+
+            if (!result) {
+                lastError = 'Failed Generating AI Response!';
+                continue;
+            }
+
+            try {
+                const xmlParsedResponse =
+                    AIHelper.parseAskAIDifferenceXMLResponse(result);
+                if (xmlParsedResponse) {
+                    return AskAIDifferenceResponse.success(xmlParsedResponse);
+                }
+                lastError = 'Failed To Parse XML!';
+            } catch (e) {
+                lastError = e instanceof Error ? e.message : String(e);
+            }
+        }
+
+        return AskAIDifferenceResponse.failure(lastError, null);
     }
 
     async askAICode(prompt: string): Promise<AskAICodeResponse> {
-        const result = await this.aiHelperService.askAICode(
-            prompt,
-            AIServiceProvider.GROQ,
-        );
+        let lastError: string = 'Failed Generating AI Response!';
 
-        if (!result)
-            return AskAICodeResponse.failure(
-                'Failed Generating AI Response!',
-                null,
-            );
+        for (
+            let attempt = 0;
+            attempt < AIConstants.AI_REFETCH_LIMIT;
+            attempt++
+        ) {
+            let result: string | null | undefined;
 
-        const xmlParsedResponse = AIHelper.parseAskAICodeXMLResponse(result);
+            try {
+                result = await this.aiHelperService.askAICode(
+                    prompt,
+                    AIServiceProvider.GROQ,
+                );
+            } catch (e) {
+                lastError = e instanceof Error ? e.message : String(e);
+                continue;
+            }
 
-        if (xmlParsedResponse)
-            return AskAICodeResponse.success(xmlParsedResponse);
-        return AskAICodeResponse.failure('Failed To Parse XML!', null);
+            if (!result) {
+                lastError = 'Failed Generating AI Response!';
+                continue;
+            }
+
+            try {
+                const xmlParsedResponse =
+                    AIHelper.parseAskAICodeXMLResponse(result);
+                if (xmlParsedResponse) {
+                    return AskAICodeResponse.success(xmlParsedResponse);
+                }
+                lastError = 'Failed To Parse XML!';
+            } catch (e) {
+                lastError = e instanceof Error ? e.message : String(e);
+            }
+        }
+
+        return AskAICodeResponse.failure(lastError, null);
     }
 
     async askAI(prompt: string): Promise<AskAIResponse> {

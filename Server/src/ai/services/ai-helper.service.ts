@@ -11,7 +11,6 @@ import {
 import { AskAISchema } from '../models/schemas/ask-ai.schema';
 import { MCQAnswerSchema } from '../models/schemas/mcq-answer.schema';
 import MCQAnswerResponse from '../models/dto/mcq-answer.response.dto';
-import { AIService } from './ai.service';
 
 @Injectable()
 export class AIHelperService {

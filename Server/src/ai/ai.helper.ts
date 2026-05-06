@@ -88,7 +88,6 @@ export class AIHelper {
         xmlString: string,
     ): AskAiCodeXmlSchemaInterface | null {
         const result = this.parseFromXML(xmlString);
-        console.log('Pared XML Result: ', result);
         const parsedResult = AskAICodeXMLSchema.safeParse(result);
         if (parsedResult.success) return parsedResult.data;
         return null;
@@ -97,30 +96,7 @@ export class AIHelper {
     public static parseAskAIDifferenceXMLResponse(
         xmlString: string,
     ): AskAiDifferenceXmlSchemaInterface | null {
-        const xmlValidationResult = XMLValidator.validate(xmlString, {
-            allowBooleanAttributes: false,
-        });
-
-        if (xmlValidationResult !== true)
-            throw new Error('Invalid XML validation result!');
-
-        const parser = new XMLParser({
-            ignoreAttributes: false,
-            attributeNamePrefix: '@_',
-            parseTagValue: true,
-            parseAttributeValue: true,
-            trimValues: true,
-            allowBooleanAttributes: false,
-            processEntities: true,
-            htmlEntities: false,
-            ignoreDeclaration: false,
-            ignorePiTags: false,
-            transformTagName: (name) => name,
-            isArray: () => false,
-        });
-
-        const result = parser.parse(xmlString) as unknown;
-
+        const result = this.parseFromXML(xmlString);
         const parsedResult = AskAIDifferenceXMLSchema.safeParse(result);
 
         if (parsedResult.success) return parsedResult.data;
@@ -130,30 +106,7 @@ export class AIHelper {
     public static parserAskAIXMLResponse(
         xmlString: string,
     ): AskAiXmlSchemaInterface | null {
-        const xmlValidationResult = XMLValidator.validate(xmlString, {
-            allowBooleanAttributes: false,
-        });
-
-        if (xmlValidationResult !== true)
-            throw new Error('Invalid XML validation result!');
-
-        const parser = new XMLParser({
-            ignoreAttributes: false,
-            attributeNamePrefix: '@_',
-            parseTagValue: true,
-            parseAttributeValue: true,
-            trimValues: true,
-            allowBooleanAttributes: false,
-            processEntities: true,
-            htmlEntities: false,
-            ignoreDeclaration: false,
-            ignorePiTags: false,
-            transformTagName: (name) => name,
-            isArray: () => false,
-        });
-
-        const result = parser.parse(xmlString) as unknown;
-
+        const result = this.parseFromXML(xmlString);
         const parsedResult = AskAIXMLSchema.safeParse(result);
 
         if (parsedResult.success) return parsedResult.data;
