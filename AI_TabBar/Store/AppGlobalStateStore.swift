@@ -21,6 +21,6 @@ enum AppSearchEntryState {
     case IDLE, TYPING, LOADING, SUCCESS, FAILURE
 }
 
-enum AppSearchMode {
-    case SEARCH, CHAT, AGENT
+enum AppSearchMode: String,CaseIterable {
+    case SEARCH, CHAT, AGENT, CONVERSATION
 }

@@ -7,8 +7,10 @@ struct AppSearchModeView: View {
     @State private var appGlobalStateStoreObservable: AppGlobalStateStoreObservable?
     @State private var aiSpotLightViewModel: AISpotLightSearchViewModel?
     @State private var appSettingsStateStoreObservable: AppSettingsStateStoreObservable?
+    @State private var selectedAppModeSegment: String = AppSearchMode.SEARCH.rawValue
     
     @Binding var searchQuery: String
+    
     
     var body: some View {
         ScrollView {
@@ -30,6 +32,13 @@ struct AppSearchModeView: View {
                         )
                         .transition(.blurReplace)
                     }
+                    
+                    CustomSegmentComponent(
+                        selectedSegment: self.$selectedAppModeSegment,
+                        caseArray: AppSearchMode.allCases.map(\.rawValue),
+                        takeFullWidth: true
+                    )
+                    .padding(.horizontal, 20)
                     
                     switch self.appGlobalStateStoreObservable?.getNetworkCallType() {
                     case .CODE:

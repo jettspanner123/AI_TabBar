@@ -33,11 +33,7 @@ struct AISpotLightSearchTextInputComponent: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Image(systemName: AppIconsConstants.current.MAGNIFYING_GLASS)
-                .resizable()
-                .frame(width: 25, height: 25)
-                .padding(.leading, 20)
-                .padding(.trailing, 10)
+            
             
             
             CustomSegmentComponent(
@@ -47,19 +43,11 @@ struct AISpotLightSearchTextInputComponent: View {
             .padding(.trailing, 10)
             .padding(.leading, 5)
             
-            HStack {
-                
-            }
-            .frame(width: 1)
-            .frame(maxHeight: .infinity)
-            .background(.white.opacity(0.5))
-            .padding(.vertical, 25)
-            .padding(.trailing, 10)
-            
             TextField("Search", text: self.$searchQuery)
                 .textFieldStyle(PlainTextFieldStyle())
                 .font(.system(size: 30, weight: .regular, design: .rounded))
                 .padding(.vertical, 20)
+                .padding(.leading, 10)
                 .focused(self.$textFeildFocusState)
                 .onSubmit {
                     Task {
@@ -80,10 +68,11 @@ struct AISpotLightSearchTextInputComponent: View {
                     self.appSettingsStateStoreObservable?.handleShowSettingsView()
                 }
             }
-            .padding(.horizontal, self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED ? 20 : 10)
             
         }
         .frame(maxWidth: .infinity)
+        .padding(.horizontal, 20)
+        .padding(.top, self.appGlobalStateStoreObservable?.getSearchAreaExpantionState() == .EXPANDED ? 0 : 5)
         .onChange(of: self.selectedRequestType) {
             self.appGlobalStateStoreObservable?.setNetworkCallType(to: NetworkCallType(rawValue: self.selectedRequestType) ?? .GENERAL)
         }

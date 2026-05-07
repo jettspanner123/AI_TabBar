@@ -91,4 +91,38 @@ class AppGlobalStateStoreObservable {
             self.appGlobalStateStore.askAISearchCodeResponse = to
         }
     }
+    
+    func handleAppModeViewChange(to: AppSearchMode) -> Void {
+        switch to {
+        case .AGENT:
+            self.handleAppModeViewChangeToAgent()
+        case .CHAT:
+            self.handleAppModeViewChangeToChat()
+        case .SEARCH:
+            self.handleAppModeViewChangeToAgent()
+        case .CONVERSATION:
+            return
+        }
+    }
+    
+    private func handleAppModeViewChangeToChat() -> Void {
+        self.setDynamicExpandedWindowHeight(to: .EXPANDED)
+        withAnimation {
+            self.appGlobalStateStore.searchMode = .CHAT
+        }
+    }
+    
+    private func handleAppModeViewChangeToSearch() -> Void {
+        self.setDynamicExpandedWindowHeight(to: .COLLAPSED)
+        withAnimation {
+            self.appGlobalStateStore.searchMode = .SEARCH
+        }
+    }
+    
+    private func handleAppModeViewChangeToAgent() -> Void {
+        self.setDynamicExpandedWindowHeight(to: .COLLAPSED)
+        withAnimation {
+            self.appGlobalStateStore.searchMode = .AGENT
+        }
+    }
 }

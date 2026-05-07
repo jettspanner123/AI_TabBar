@@ -21,6 +21,8 @@ struct AISpotLightSearchView: View {
                         .fill(.app.opacity(0.5))
                 }
             
+            
+            // MARK: Difference Application Modes
             switch self.appGlobalStateStore.searchMode {
             case .AGENT:
                 EmptyView()
@@ -28,6 +30,8 @@ struct AISpotLightSearchView: View {
                 AppChatModeView()
             case .SEARCH:
                 AppSearchModeView(searchQuery: self.$searchQuery)
+            case .CONVERSATION:
+                EmptyView()
             }
         }
         .frame(height: self.appGlobalStateStoreObservable?.getDynamicExpandedWindowHeight())

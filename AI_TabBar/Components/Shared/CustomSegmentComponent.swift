@@ -3,7 +3,10 @@ import SwiftUI
 
 struct CustomSegmentComponent: View {
     @Binding var selectedSegment: String
-    var caseArray: Array<String>
+    
+    var caseArray: [String]
+    var takeFullWidth: Bool = false
+    
     var body: some View {
         HStack(spacing: 0) {
             ForEach(self.caseArray, id: \.self) { caseName in
@@ -12,23 +15,33 @@ struct CustomSegmentComponent: View {
                     .foregroundStyle(self.selectedSegment == caseName ? .black : .white)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 10)
+                    .frame(maxWidth: takeFullWidth ? .infinity : nil)
                     .hoverBackground(
-                        normal: self.selectedSegment == caseName ? .white : .white.opacity(0.08),
+                        normal: self.selectedSegment == caseName
+                            ? .white
+                            : .white.opacity(0.08),
                         hover: .white.opacity(0.15),
                         animation: nil
                     )
-                    .background(self.selectedSegment == caseName ? .white : .white.opacity(0.08))
+                    .background(
+                        self.selectedSegment == caseName
+                            ? .white
+                            : .white.opacity(0.08)
+                    )
                     .pointerMouseHoverEffect()
+                    .contentShape(Rectangle())
+                    .border(.white.opacity(0.1), width: 1)
                     .onTapGesture {
                         if self.selectedSegment == caseName { return }
                         self.selectedSegment = caseName
                     }
             }
         }
+        .frame(maxWidth: takeFullWidth ? .infinity : nil)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .overlay {
             RoundedRectangle(cornerRadius: 8)
-                .stroke(.white.opacity(0.1), lineWidth: 1)
+                .stroke(.white.opacity(0.15), lineWidth: 1)
         }
     }
 }
