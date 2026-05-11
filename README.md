@@ -1,8 +1,10 @@
 # 🔍 AI Tab Bar
+
 ### Your AI-Powered Spotlight for macOS — ask anything, from anywhere.
 
 <br/>
 
+<div style="display: flex; flex-direction: column; gap: 0px;">
 <p align="left">
   <img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white"/>
   <img src="https://img.shields.io/badge/Swift_5.9-F05138?style=for-the-badge&logo=swift&logoColor=white"/>
@@ -26,6 +28,7 @@
   <img src="https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white"/>
   <img src="https://img.shields.io/badge/Multer-FF6600?style=for-the-badge&logo=npm&logoColor=white"/>
 </p>
+</div>
 
 ---
 
@@ -34,6 +37,7 @@
 **AI Tab Bar** is a macOS menu-bar utility that brings an AI-powered Spotlight experience right to your desktop. Hit a global shortcut from **any app**, type your question, and get a structured, beautiful answer — instantly.
 
 It supports three distinct query modes:
+
 - 💬 **General Q&A** — ask anything, get a heading, summary, descriptive answer, and follow-up questions
 - ⚖️ **Difference Mode** — compare two concepts side by side with structured difference points
 - 💻 **Code Mode** — get brute force + optimised solutions with pros/cons, approach steps, and explanations
@@ -136,30 +140,30 @@ Here's how a request travels from the macOS app all the way back:
 
 ### 📱 macOS Client (Swift)
 
-| Technology | Purpose |
-|---|---|
-| **SwiftUI** | Declarative UI framework |
-| **Swift Observation** (`@Observable`) | Reactive state management |
-| **AppKit / NSWindow** | Custom borderless floating window |
-| **HotKey** | Global keyboard shortcut (`Cmd + Shift + Space`) |
-| **Firebase** | App configuration / analytics |
-| **URLSession** | HTTP networking to the backend |
-| **SwiftData** | Local persistence |
+| Technology                            | Purpose                                          |
+| ------------------------------------- | ------------------------------------------------ |
+| **SwiftUI**                           | Declarative UI framework                         |
+| **Swift Observation** (`@Observable`) | Reactive state management                        |
+| **AppKit / NSWindow**                 | Custom borderless floating window                |
+| **HotKey**                            | Global keyboard shortcut (`Cmd + Shift + Space`) |
+| **Firebase**                          | App configuration / analytics                    |
+| **URLSession**                        | HTTP networking to the backend                   |
+| **SwiftData**                         | Local persistence                                |
 
 ### 🖥️ Backend (NestJS)
 
-| Technology | Purpose |
-|---|---|
-| **NestJS 11** | Server framework with DI, pipes, interceptors |
-| **TypeScript 5.7** | Type-safe backend |
-| **Groq API** | Primary LLM provider (`openai/gpt-oss-20b` via OpenAI-compatible SDK) |
-| **Google Gemini 2.5 Flash** | Vision model for MCQ image analysis |
-| **Vercel AI SDK** (`ai`, `@ai-sdk/google`) | Structured output generation for Gemini |
-| **Instructor AI** | Function-calling structured output wrapper |
-| **fast-xml-parser** | XML validation + parsing of LLM responses |
-| **Zod 4** | Runtime schema validation of parsed XML |
-| **Multer** | Multipart file upload handling (MCQ images) |
-| **class-validator** | Request DTO validation |
+| Technology                                 | Purpose                                                               |
+| ------------------------------------------ | --------------------------------------------------------------------- |
+| **NestJS 11**                              | Server framework with DI, pipes, interceptors                         |
+| **TypeScript 5.7**                         | Type-safe backend                                                     |
+| **Groq API**                               | Primary LLM provider (`openai/gpt-oss-20b` via OpenAI-compatible SDK) |
+| **Google Gemini 2.5 Flash**                | Vision model for MCQ image analysis                                   |
+| **Vercel AI SDK** (`ai`, `@ai-sdk/google`) | Structured output generation for Gemini                               |
+| **Instructor AI**                          | Function-calling structured output wrapper                            |
+| **fast-xml-parser**                        | XML validation + parsing of LLM responses                             |
+| **Zod 4**                                  | Runtime schema validation of parsed XML                               |
+| **Multer**                                 | Multipart file upload handling (MCQ images)                           |
+| **class-validator**                        | Request DTO validation                                                |
 
 ---
 
@@ -178,11 +182,13 @@ Here's how a request travels from the macOS app all the way back:
 ### 🖥️ Server Setup
 
 **1. Navigate to the Server directory**
+
 ```bash
 cd Server
 ```
 
 **2. Install dependencies**
+
 ```bash
 # using npm
 npm install
@@ -194,19 +200,21 @@ bun install
 **3. Set up environment variables**
 
 Create a `.env` file in the `Server/` directory:
+
 ```env
 AI_TAB_BAR_GROQ_API_KEY=your_groq_api_key_here
 GOOGLE_API_KEY=your_google_ai_api_key_here
 PORT=3000
 ```
 
-| Variable | Description |
-|---|---|
-| `AI_TAB_BAR_GROQ_API_KEY` | Your Groq API key for LLM calls |
-| `GOOGLE_API_KEY` | Your Google AI key for Gemini (MCQ vision) |
-| `PORT` | Server port (defaults to `3000`) |
+| Variable                  | Description                                |
+| ------------------------- | ------------------------------------------ |
+| `AI_TAB_BAR_GROQ_API_KEY` | Your Groq API key for LLM calls            |
+| `GOOGLE_API_KEY`          | Your Google AI key for Gemini (MCQ vision) |
+| `PORT`                    | Server port (defaults to `3000`)           |
 
 **4. Start the server**
+
 ```bash
 # development (with hot reload)
 npm run start:dev
@@ -223,6 +231,7 @@ The server will be running at `http://localhost:3000` 🎉
 ### 📱 macOS App Setup
 
 **1. Open the Xcode project**
+
 ```bash
 open AI_TabBar.xcodeproj
 ```
@@ -239,6 +248,7 @@ Xcode will automatically resolve packages on first open. If not:
 **4. Configure the server URL**
 
 In `AI_TabBar/Constants/NetworkServiceConstants.swift`, make sure the base URL points to your running server:
+
 ```swift
 // e.g. http://localhost:3000
 ```
@@ -255,14 +265,14 @@ Press **`Cmd + Shift + Space`** from anywhere to open the AI search bar.
 
 ## ⚙️ Key Configuration
 
-| Constant | Value | Description |
-|---|---|---|
-| `AI_REFETCH_LIMIT` | `3` | Max retry attempts per endpoint on XML/Zod failure |
-| `AI_MODEL` | `gemini-2.5-flash` | Gemini model used for MCQ vision |
-| `WINDOW_DIMENTIONS_COLLAPSED` | `900 × 120` | Search bar height when idle |
-| `WINDOW_DIMENTIONS_EXPANDED` | `900 × 800` | Window height when results are shown |
-| `SEARCH_AREA_TOP_OFFSET` | `200` | Distance from top of screen |
-| `MCQ_IMAGE_MAX_FILE_SIZE_BYTES` | `5MB` | Max image size for MCQ endpoint |
+| Constant                        | Value              | Description                                        |
+| ------------------------------- | ------------------ | -------------------------------------------------- |
+| `AI_REFETCH_LIMIT`              | `3`                | Max retry attempts per endpoint on XML/Zod failure |
+| `AI_MODEL`                      | `gemini-2.5-flash` | Gemini model used for MCQ vision                   |
+| `WINDOW_DIMENTIONS_COLLAPSED`   | `900 × 120`        | Search bar height when idle                        |
+| `WINDOW_DIMENTIONS_EXPANDED`    | `900 × 800`        | Window height when results are shown               |
+| `SEARCH_AREA_TOP_OFFSET`        | `200`              | Distance from top of screen                        |
+| `MCQ_IMAGE_MAX_FILE_SIZE_BYTES` | `5MB`              | Max image size for MCQ endpoint                    |
 
 ---
 
