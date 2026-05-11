@@ -4,24 +4,27 @@
 <br/>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Platform-macOS-000000?style=for-the-badge&logo=apple&logoColor=white&color=000000"/>
-  <img src="https://img.shields.io/badge/Swift-5.9-F05138?style=for-the-badge&logo=swift&logoColor=white"/>
-  <img src="https://img.shields.io/badge/SwiftUI-Framework-0070C9?style=for-the-badge&logo=swift&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Firebase-Integrated-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"/>
+  <img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Swift_5.9-F05138?style=for-the-badge&logo=swift&logoColor=white"/>
+  <img src="https://img.shields.io/badge/SwiftUI-0070C9?style=for-the-badge&logo=swift&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"/>
+  <img src="https://img.shields.io/badge/AppKit-0070C9?style=for-the-badge&logo=apple&logoColor=white"/>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/NestJS-Backend-E0234E?style=for-the-badge&logo=nestjs&logoColor=white"/>
-  <img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Groq-LLM%20Provider-F55036?style=for-the-badge&logo=groq&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Gemini-2.5%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white"/>
+  <img src="https://img.shields.io/badge/NestJS_11-E0234E?style=for-the-badge&logo=nestjs&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TypeScript_5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Groq_API-F55036?style=for-the-badge&logo=groq&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Gemini_2.5-4285F4?style=for-the-badge&logo=google&logoColor=white"/>
+  <img src="https://img.shields.io/badge/OpenAI_SDK-412991?style=for-the-badge&logo=openai&logoColor=white"/>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Zod-Validation-3E67B1?style=for-the-badge&logo=zod&logoColor=white"/>
-  <img src="https://img.shields.io/badge/XML-Parsing-FF6600?style=for-the-badge&logo=xml&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Node.js-Runtime-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Bun-Package%20Manager-000000?style=for-the-badge&logo=bun&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Zod_4-3E67B1?style=for-the-badge&logo=zod&logoColor=white"/>
+  <img src="https://img.shields.io/badge/XML_Parser-FF6600?style=for-the-badge&logo=xml&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Multer-FF6600?style=for-the-badge&logo=npm&logoColor=white"/>
 </p>
 
 ---
@@ -250,130 +253,13 @@ Press **`Cmd + Shift + Space`** from anywhere to open the AI search bar.
 
 ---
 
-## 🌐 API Reference
-
-All endpoints accept and return `application/json`. Base URL: `http://localhost:3000`
-
-### `POST /ai/ask`
-General knowledge Q&A.
-
-**Request**
-```json
-{ "prompt": "What is machine learning?" }
-```
-
-**Response**
-```json
-{
-  "success": true,
-  "message": "AI response generated",
-  "data": {
-    "RootResponse": {
-      "Heading": "Introduction To Machine Learning",
-      "SingleLineAnswer": "...",
-      "DescriptiveAnswer": "...",
-      "FollowUpQuestions": {
-        "Question": ["...", "...", "..."]
-      }
-    }
-  }
-}
-```
-
----
-
-### `POST /ai/code`
-Coding problem solver — brute force + optimised solution.
-
-**Request**
-```json
-{ "prompt": "Two sum problem in C++" }
-```
-
-**Response**
-```json
-{
-  "success": true,
-  "message": "AI response generated",
-  "data": {
-    "RootResponse": {
-      "Heading": "Two Sum Problem",
-      "CodingLanguage": "C++",
-      "Approach": { "Step": ["...", "..."] },
-      "BruteForceCode": "#include...",
-      "BruteForceCodeProsAndCons": { "Pros": "...", "Cons": "..." },
-      "OptimisedCode": "#include...",
-      "OptimisedCodeProsAndCons": { "Pros": "...", "Cons": "..." },
-      "CodeExplnation": "...",
-      "FollowUpQuestions": { "Question": ["...", "...", "..."] }
-    }
-  }
-}
-```
-
----
-
-### `POST /ai/difference`
-Side-by-side comparison of two concepts.
-
-**Request**
-```json
-{ "prompt": "What is the difference between TCP and UDP?" }
-```
-
-**Response**
-```json
-{
-  "success": true,
-  "message": "AI response generated",
-  "data": {
-    "RootResponse": {
-      "Heading": "TCP vs UDP",
-      "SingleLineDifference": "...",
-      "Topics": { "TopicOne": "TCP", "TopicTwo": "UDP" },
-      "Differences": {
-        "Difference": [
-          { "FirstTopicDifferencePoint": "...", "SecondTopicDifferencePoint": "..." }
-        ]
-      },
-      "FollowUpQuestions": { "Question": ["...", "...", "..."] }
-    }
-  }
-}
-```
-
----
-
-### `POST /ai/mcq`
-Solves a multiple-choice question from an image.
-
-**Request** — `multipart/form-data`
-| Field | Type | Description |
-|---|---|---|
-| `image` | File | PNG, JPEG, or WEBP — max 5MB |
-
-**Response**
-```json
-{
-  "success": true,
-  "message": "...",
-  "data": {
-    "optionNumber": 2,
-    "optionName": "B",
-    "explanation": "..."
-  }
-}
-```
-
----
-
 ## ⚙️ Key Configuration
 
 | Constant | Value | Description |
 |---|---|---|
 | `AI_REFETCH_LIMIT` | `3` | Max retry attempts per endpoint on XML/Zod failure |
 | `AI_MODEL` | `gemini-2.5-flash` | Gemini model used for MCQ vision |
-| `WINDOW_DIMENTIONS_COLLAPSED` | `900 × 60` | Search bar height when idle |
+| `WINDOW_DIMENTIONS_COLLAPSED` | `900 × 120` | Search bar height when idle |
 | `WINDOW_DIMENTIONS_EXPANDED` | `900 × 800` | Window height when results are shown |
 | `SEARCH_AREA_TOP_OFFSET` | `200` | Distance from top of screen |
 | `MCQ_IMAGE_MAX_FILE_SIZE_BYTES` | `5MB` | Max image size for MCQ endpoint |
