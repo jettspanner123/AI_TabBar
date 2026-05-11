@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/AppKit-0070C9?style=for-the-badge&logo=apple&logoColor=white"/>
 </p>
 
-<p align="left">
+<p align="left" style="transform: translate(0, -20px)">
   <img src="https://img.shields.io/badge/NestJS_11-E0234E?style=for-the-badge&logo=nestjs&logoColor=white"/>
   <img src="https://img.shields.io/badge/TypeScript_5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
   <img src="https://img.shields.io/badge/Groq_API-F55036?style=for-the-badge&logo=groq&logoColor=white"/>
