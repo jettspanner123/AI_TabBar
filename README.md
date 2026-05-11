@@ -1,9 +1,9 @@
-<h1 align="center">🔍 AI Tab Bar</h1>
-<h3 align="center">Your AI-Powered Spotlight for macOS — ask anything, from anywhere.</h3>
+# 🔍 AI Tab Bar
+### Your AI-Powered Spotlight for macOS — ask anything, from anywhere.
 
 <br/>
 
-<p align="center">
+<p align="left">
   <img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white"/>
   <img src="https://img.shields.io/badge/Swift_5.9-F05138?style=for-the-badge&logo=swift&logoColor=white"/>
   <img src="https://img.shields.io/badge/SwiftUI-0070C9?style=for-the-badge&logo=swift&logoColor=white"/>
@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/AppKit-0070C9?style=for-the-badge&logo=apple&logoColor=white"/>
 </p>
 
-<p align="center">
+<p align="left">
   <img src="https://img.shields.io/badge/NestJS_11-E0234E?style=for-the-badge&logo=nestjs&logoColor=white"/>
   <img src="https://img.shields.io/badge/TypeScript_5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
   <img src="https://img.shields.io/badge/Groq_API-F55036?style=for-the-badge&logo=groq&logoColor=white"/>
@@ -19,7 +19,7 @@
   <img src="https://img.shields.io/badge/OpenAI_SDK-412991?style=for-the-badge&logo=openai&logoColor=white"/>
 </p>
 
-<p align="center">
+<p align="left">
   <img src="https://img.shields.io/badge/Zod_4-3E67B1?style=for-the-badge&logo=zod&logoColor=white"/>
   <img src="https://img.shields.io/badge/XML_Parser-FF6600?style=for-the-badge&logo=xml&logoColor=white"/>
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
