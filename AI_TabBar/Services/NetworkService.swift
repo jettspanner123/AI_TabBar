@@ -1,5 +1,10 @@
 import Foundation
 
+private extension URLRequest {
+    mutating func addInternalRouteKey() {
+        self.setValue("OGOGOGUD", forHTTPHeaderField: "internal-route-key")
+    }
+}
 
 class NetworkService {
     public static let current = NetworkService()
@@ -20,6 +25,7 @@ class NetworkGetServiceHelper {
         let requestBody = ["prompt": query]
         requestURL.httpBody = try? JSONEncoder().encode(requestBody)
         requestURL.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        requestURL.addInternalRouteKey()
         
         let (data, _) = try await URLSession.shared.data(for: requestURL)
         
@@ -43,6 +49,7 @@ class NetworkGetServiceHelper {
         let requestBody = ["prompt": query]
         requestURL.httpBody = try? JSONEncoder().encode(requestBody)
         requestURL.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        requestURL.addInternalRouteKey()
         
         let (data, _) = try await URLSession.shared.data(for: requestURL)
         
@@ -66,6 +73,7 @@ class NetworkGetServiceHelper {
         let requestBody = ["prompt": query]
         requestURL.httpBody = try? JSONEncoder().encode(requestBody)
         requestURL.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        requestURL.addInternalRouteKey()
         
         let (data, _) = try await URLSession.shared.data(for: requestURL)
         
@@ -90,6 +98,7 @@ class NetworkPostServiceHelper {
         var requestURL = URLRequest(url: NetworkServiceHelper.current.constructURL(endpoint: .ai, subEndpoint: .getMCQAnswer)!)
         requestURL.httpMethod = "POST"
         requestURL.httpBody = imageData
+        requestURL.addInternalRouteKey()
         
         let (data, _) = try await URLSession.shared.data(for: requestURL)
         

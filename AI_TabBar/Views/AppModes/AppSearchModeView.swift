@@ -34,7 +34,7 @@ struct AppSearchModeView: View {
                     }
                     
                     CustomSegmentComponent(
-                        selectedSegment: self.$selectedAppModeSegment,
+                        selectedSegment: self.appGlobalStateStore.$searchModeRaw,
                         caseArray: AppSearchMode.allCases.map(\.rawValue),
                         takeFullWidth: true
                     )

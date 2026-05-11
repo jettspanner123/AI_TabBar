@@ -4,6 +4,7 @@ import {
     HttpException,
     HttpCode,
     HttpStatus,
+    Get,
     Post,
     UploadedFile,
     UseInterceptors,
@@ -18,6 +19,7 @@ import AskAIResponse from './models/dto/ask-ai.response.dto';
 import MCQAnswerResponse from './models/dto/mcq-answer.response.dto';
 import AskAIDifferenceResponse from './models/dto/ask-ai-difference.response.dto';
 import AskAICodeResponse from './models/dto/ask-ai-code.response.dto';
+import BaseResponse from '../global/models/base.response';
 
 @Controller('ai')
 export class AIController {
@@ -55,6 +57,12 @@ export class AIController {
                 ? error.message
                 : 'Failed to fetch data from AI',
         );
+    }
+
+    @Get('health')
+    @HttpCode(HttpStatus.OK)
+    healthCheck(): BaseResponse {
+        return BaseResponse.success('AI service is up and running');
     }
 
     @Post('mcq')

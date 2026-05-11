@@ -5,6 +5,7 @@ class AppGlobalStateStore {
     var searchAreaExpantionState: AppSearchAreaExpantionState = .COLLAPSED
     var searchEntryState: AppSearchEntryState = .IDLE
     var searchMode: AppSearchMode = .SEARCH
+    var searchModeRaw: String = AppSearchMode.SEARCH.rawValue
     
     var currentSelectedNetworkCallType: NetworkCallType = .GENERAL
     var askAISearchResponse: Optional<APIResponse<AskAIQuestionResponse>> = nil
